@@ -1,9 +1,9 @@
-import TopOfPage from "./TopOfPage"
+import HomePage from "./HomePage"
 
 const Main = () => {
       return (
             <div className="center">
-                  <TopOfPage />
+                  <HomePage />
             </div>
       )
 }
