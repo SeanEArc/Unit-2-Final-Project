@@ -1,3 +1,5 @@
+// This not is another update for the commit because I didn't provide good commit details the first time around.
+
 let trackedFoodData = [{
       foodName: "Ramen",
       calories: 120,
@@ -26,12 +28,10 @@ export const addFood = (newFood) => {
 
 export const getTrackedFood = () => trackedFoodData;
 
-
-// Listens
+// Wait's for unsubscribe to be returned to stop tracking changes to the form.
 export const subscribeToFoodUpdates = (callback) => {
   listeners.push(callback);
 
-  // Return unsubscribe function
   return () => {
     listeners = listeners.filter(listener => listener !== callback);
   };
