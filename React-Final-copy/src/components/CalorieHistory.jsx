@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
-import { getTrackedFood, subscribeToFoodUpdates } from './foodStorage';
+import { getTrackedFood, subscribeToFoodUpdates, formatNumber } from './foodStorage';
+
 
 const CalorieHistory = () => {
 
@@ -24,48 +25,56 @@ const CalorieHistory = () => {
       }, []);
 
       return(
-            <div>
-                  {trackedFood.length > 0 ? (
-                  <div>
-                  <h3>Logged Foods:</h3>
-                  {trackedFood.map((food, index) => (
-                        <div key={index} className="border p-3 m-2 rounded">
-                        <h4 className="font-bold">{food.foodName}</h4>
-                        <p>Calories: {food.calories}</p>
-                        {food.protein > 0 && <p>Protein: {food.protein}g</p>}
-                        {food.carbs > 0 && <p>Carbs: {food.carbs}g</p>}
-                        {food.fat > 0 && <p>Fat: {food.fat}g</p>}
+            
+            <div className="flex w-full max-w-[90%] justify-center items-center mx-auto">
+ 
+                  <div className="flex-auto grid grid-cols-[60%_40%] mt-10 ">
+                        
+                        {trackedFood.length > 0 ? (
+                        <div>
+                              <h2 className="text-center">Logged Foods:</h2>
+                              {trackedFood.map((food, index) => (
+                                    <div key={index} className="border p-3 m-1 rounded col-span-1">
+                                          <h4 className="font-bold">{food.foodName}</h4>
+                                          <p>Calories: {food.calories}</p>
+                                          {food.protein > 0 && <p>Protein: {food.protein}g</p>}
+                                          {food.carbs > 0 && <p>Carbs: {food.carbs}g</p>}
+                                          {food.fat > 0 && <p>Fat: {food.fat}g</p>}
+                                    </div>
+                              ))}
                         </div>
-                  ))}
+                        ) : (
+                        <div> 
+                              <h2 className="flex flex-auto text-center font-bold"> Nothing has been logged yet </h2>
+                        </div>
+                        )}
+
+                        <div className="flex-auto col-2 ml-4">
+
+                              <h2 className="text-center "> Calculations </h2>
+
+                              <div>
+                                    <h2> Total Calories Consumed: </h2>
+                                    <h2 className="text-center"> {formatNumber(totalCalories)} </h2>
+                                    
+                                    <h1>Total Macro's: </h1>
+                                    <ul>
+                                          <li>
+                                                <h3>Protein: {totalProtein}</h3>
+                                          </li>
+                                          <li>
+                                                <h3>Carbs: {totalCarbs} </h3>
+                                          </li>
+                                          <li>
+                                                <h3>Fats: {totalFat}</h3>
+                                          </li>
+                                    </ul>
+
+
+                              </div>
+                        </div>
                   </div>
-                  ) : (
-                  <div> 
-                  <h2 className="flex-auto text-center font-bold">Log a food item to get started!</h2>
-                  </div>
-                  )}
 
-                  <div>
-
-                       <h1>Total Calories Consumed: {totalCalories} </h1> 
-                       <h1>Total Macro's: </h1>
-                       <ul>
-                        <li>
-                              Protein: {totalProtein}
-                        </li>
-                        <li>
-                              Carbs: {totalCarbs}
-                        </li>
-                        <li>
-                              Fats: {totalFat}
-                        </li>
-                       </ul>
-                       
-                       
-
-
-
-                  </div>
-                  
             </div>
       )
 }

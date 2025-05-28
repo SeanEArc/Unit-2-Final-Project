@@ -1,6 +1,7 @@
 import Modal from "./Modal"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import Wheat from "../assets/Wheat.png"
 
 const TopOfPage = ( ) => {
 
@@ -13,7 +14,16 @@ const TopOfPage = ( ) => {
       
       return (
             <div>
+                  <div>
+                        
+
+                  </div>
+
                   <div className="grid grid-cols-11 flex-auto text-center bg-cyan-100 font-bold ">
+
+
+                        <img src={Wheat} alt="Wheat" className="flex-auto h-[48px] w-[48px]"/>
+
                         <Link to='/' className="flex-auto col-start-4 col-end-9 text-3xl text-center font-bold p-2 bg-cyan-100"> Calorie Counter </Link> 
                   </div>
                   

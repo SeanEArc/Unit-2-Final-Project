@@ -28,6 +28,7 @@ export const addFood = (newFood) => {
 
 export const getTrackedFood = () => trackedFoodData;
 
+
 // Wait's for unsubscribe to be returned to stop tracking changes to the form.
 export const subscribeToFoodUpdates = (callback) => {
   listeners.push(callback);
@@ -37,6 +38,8 @@ export const subscribeToFoodUpdates = (callback) => {
   };
 };
 
-
+export const formatNumber = (number) => {
+  return new Intl.NumberFormat('en-US').format(number);
+}
 
 

@@ -7,6 +7,8 @@ const HomePage = () => {
 
       return (
 
+            <div className="flex w-full max-w-[90%] justify-center items-center mx-auto">        
+
       <div className='grid grid-cols-9 grid-rows-10 flex-auto '>
 
         <h1 className="flex-auto col-start-4 col-end-7 row-start-2 text-4xl font-bold mb-4 text-center">Dashboard</h1>
@@ -25,7 +27,7 @@ const HomePage = () => {
 
       {showModal && <Modal onClose={() => setShowModal(false)} />}
     </div>
-            
+          </div>  
       )
   }
 
