@@ -1,4 +1,5 @@
-// This not is another update for the commit because I didn't provide good commit details the first time around.
+
+// This stores the user's entry 
 
 let trackedFoodData = [{
       foodName: "Ramen",
@@ -15,6 +16,7 @@ let trackedFoodData = [{
       fat: 7,
     }
   ];
+
 let listeners = [];
 
 export const addFood = (newFood) => {
@@ -42,4 +44,18 @@ export const formatNumber = (number) => {
   return new Intl.NumberFormat('en-US').format(number);
 }
 
+export const addedItems = (object, entryType) => {
+  return object.reduce((acc, curr) => acc + curr[entryType], 0)
+}
 
+
+
+export const deleteFood = (index) => {
+  trackedFoodData = trackedFoodData.filter((_, i) => i !== index);
+  listeners.forEach(listener => listener(trackedFoodData));
+};
+
+export const updateEntry = (index, updatedFood) => {
+  trackedFoodData[index] = updatedFood
+  listeners.forEach(listener => listener(trackedFoodData))
+}
