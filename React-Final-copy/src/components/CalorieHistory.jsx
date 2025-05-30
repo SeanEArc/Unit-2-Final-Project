@@ -120,6 +120,7 @@ const CalorieHistory = (  ) => {
 
 
       return(
+            <div className="">
             
             <div className="flex w-full max-w-[90%] justify-center items-center mx-auto">
  
@@ -212,6 +213,7 @@ const CalorieHistory = (  ) => {
                         </div>
                   </div>
 
+            </div>
             </div>
       )
 }

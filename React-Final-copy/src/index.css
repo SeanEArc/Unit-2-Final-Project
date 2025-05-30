@@ -3,6 +3,7 @@
 :root {
   max-width: 100%;
   min-width: 400px;
+  background: var(--color-zinc-50);
 }
 
 .App {

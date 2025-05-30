@@ -47,7 +47,8 @@ const Modal = ({ onClose }) => {
   return (
     <div ref={modalRef} 
       onClick={closeModal}
-      className="fixed inset-0 bg-opacity-10 backdrop-blur-sm flex items-center justify-center">
+      className="fixed inset-0 backdrop-blur-sm flex items-center justify-center">
+        
       <div className="grid grid-row-6 bg-zinc-50 p-6 rounded-lg shadow-xl w-2/5 border">
 
        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
