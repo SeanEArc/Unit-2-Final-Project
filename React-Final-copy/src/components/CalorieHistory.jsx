@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react"
 import { getTrackedFood, subscribeToFoodUpdates, formatNumber, addedItems, deleteFood, updateEntry} from './foodStorage';
+import ConfirmationModal from "./ConfirmationModal";
 
 
 
-const CalorieHistory = () => {
+const CalorieHistory = (  ) => {
 
       const [trackedFood, setTrackedFood] = useState([]);
       const [editingIndex, setEditingIndex] = useState(null);
       const [editForm, setEditForm] = useState({ foodName: '', calories: '', protein: '', carbs: '', fat: ''});
+      const [showConfirmationModel, setShowConfirmationModel] = useState(false)
+      const [deleteIndex, setDeleteIndex] = useState(null);
+
 
       
       const totalCalories = addedItems(trackedFood, 'calories')
@@ -29,25 +33,90 @@ const CalorieHistory = () => {
       }, []);
       
 
-      const handleDelete = (index) => {
-            deleteFood(index);
-      };
-
       const handleModify = (index) => {
             setEditingIndex(index)
             setEditForm(trackedFood[index])
       }
+
       
       const handleUpdate = () => {
       updateEntry(editingIndex, {
-      ...editForm,
-      calories: Number(editForm.calories),
-      protein: Number(editForm.protein),
-      carbs: Number(editForm.carbs),
-      fat: Number(editForm.fat),
-      });
+            ...editForm,
+            calories: Number(editForm.calories),
+            protein: Number(editForm.protein),
+            carbs: Number(editForm.carbs),
+            fat: Number(editForm.fat),
+            });
       setEditingIndex(null);
       };
+
+      const handleConfirmDelete = () => {
+            if (deleteIndex !== null) {
+            deleteFood(deleteIndex);
+            setDeleteIndex(null);
+            }
+            setShowConfirmationModel(false);
+      };
+
+      const renderEditingForm = () => (
+            <div className="p-4 border rounded bg-gray-100 mt-4 col-span-2">
+                  <h2 className="font-bold mb-2 text-center">Edit Food Entry</h2>
+                  <input
+                  className="block mb-2 p-2 w-full"
+                  placeholder="Food Name"
+                  value={editForm.foodName}
+                  onChange={(e) =>
+                  setEditForm({ ...editForm, foodName: e.target.value })
+                  }
+                  />
+                  <input
+                  className="block mb-2 p-2 w-full"
+                  placeholder="Calories"
+                  type="number"
+                  value={editForm.calories}
+                  onChange={(e) =>
+                  setEditForm({ ...editForm, calories: e.target.value })
+                  }
+                  />
+                  <input
+                  className="block mb-2 p-2 w-full"
+                  placeholder="Protein"
+                  type="number"
+                  value={editForm.protein}
+                  onChange={(e) =>
+                  setEditForm({ ...editForm, protein: e.target.value })
+                  }
+                  />
+                  <input
+                  className="block mb-2 p-2 w-full"
+                  placeholder="Carbs"
+                  type="number"
+                  value={editForm.carbs}
+                  onChange={(e) =>
+                  setEditForm({ ...editForm, carbs: e.target.value })
+                  }
+                  />
+                  <input
+                  className="block mb-2 p-2 w-full"
+                  placeholder="Fat"
+                  type="number"
+                  value={editForm.fat}
+                  onChange={(e) => setEditForm({ ...editForm, fat: e.target.value })}
+                  />
+                  <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+                  onClick={handleUpdate}
+                  >
+                  Save
+                  </button>
+                  <button
+                  className="bg-gray-300 px-4 py-2 rounded"
+                  onClick={() => setEditingIndex(null)}
+                  >
+                  Cancel
+                  </button>
+            </div>
+      );
 
 
       return(
@@ -62,17 +131,17 @@ const CalorieHistory = () => {
                         <div>
                               <h2 className="text-center">Logged Foods:</h2>
                               {trackedFood.map((food, index) => (
-                                    <div key={index} className="border p-3 m-1 rounded col-span-1">
+                                    <div key={index} className="border p-3 m-2 rounded col-span-1">
 
                                           <div className="grid grid-cols-2">
 
                                                 <div className="flex-auto">
-                                                      <h3 className="font-bold">{food.foodName}</h3>
+                                                      <h2 className="font-bold">{food.foodName}</h2>
                                                       <p>Calories: {food.calories}</p>
                                                       <h3> Macros:</h3>
-                                                      {food.protein > 0 && <p>Protein: {food.protein}g</p>}
-                                                      {food.carbs > 0 && <p>Carbs: {food.carbs}g</p>}
-                                                      {food.fat > 0 && <p>Fat: {food.fat}g</p>}
+                                                      {food.protein > 0 && <p> Protein: {food.protein}g</p>}
+                                                      {food.carbs > 0 && <p> Carbs: {food.carbs}g</p>}
+                                                      {food.fat > 0 && <p> Fats: {food.fat}g</p>}
                                                 </div>
 
 
@@ -86,22 +155,25 @@ const CalorieHistory = () => {
                                                       <div className="flex-auto content-center justify-center">
 
                                                       
-                                                      <button                                        onClick={() => {
-                                                      if(confirm("Are you sure you want to delete this food entry?")) {
-                                                      handleDelete(index)}
+                                                      <button 
+                                                      onClick={() => {setDeleteIndex(index);
+                                                      setShowConfirmationModel(true);
                                                       }}
 
                                                       className="flex-auto h-15 w-60 bg-red-500 rounded hover:bg-red-400">
                                                       Delete
                                                       </button>
+
+                                                      {showConfirmationModel && (
+                                                      <ConfirmationModal
+                                                      onClose={() => {
+                                                            setShowConfirmationModel(false);
+                                                            setDeleteIndex(null);}}
+                                                      onConfirm={handleConfirmDelete}/>)}
                                                       </div>
                                                 </div>
 
-
-                                                
                                           </div>
-                                    
-                                    
                                     
                                     </div>
                               ))}
@@ -133,18 +205,7 @@ const CalorieHistory = () => {
                                           </li>
                                     </ul>
 
-                                    {editingIndex !== null && (
-                        <div className="p-4 border rounded bg-gray-100 mt-4 col-span-2">
-                        <h2 className="font-bold mb-2">Edit Food Entry</h2>
-                        <input className="block mb-2 p-2 w-full" placeholder="Food Name" value={editForm.foodName} onChange={e => setEditForm({...editForm, foodName: e.target.value})} />
-                        <input className="block mb-2 p-2 w-full" placeholder="Calories" type="number" value={editForm.calories} onChange={e => setEditForm({...editForm, calories: e.target.value})} />
-                        <input className="block mb-2 p-2 w-full" placeholder="Protein" type="number" value={editForm.protein} onChange={e => setEditForm({...editForm, protein: e.target.value})} />
-                        <input className="block mb-2 p-2 w-full" placeholder="Carbs" type="number" value={editForm.carbs} onChange={e => setEditForm({...editForm, carbs: e.target.value})} />
-                        <input className="block mb-2 p-2 w-full" placeholder="Fat" type="number" value={editForm.fat} onChange={e => setEditForm({...editForm, fat: e.target.value})} />
-                        <button className="bg-blue-500 text-white px-4 py-2 rounded mr-2" onClick={handleUpdate}>Save</button>
-                        <button className="bg-gray-300 px-4 py-2 rounded" onClick={() => setEditingIndex(null)}>Cancel</button>
-                        </div>
-                        )}
+            {editingIndex !== null && renderEditingForm()}
 
 
                               </div>

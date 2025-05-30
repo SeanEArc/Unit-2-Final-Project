@@ -11,6 +11,7 @@ const Modal = ({ onClose }) => {
   const [protein, setProtein] = useState("")
   const [carbs, setCarbs] = useState("")
   const [fat, setFat] = useState("")
+  const [date, setDate] = useState("")
 
   const closeModal = (event) => {
     if(modalRef.current === event.target)
@@ -26,6 +27,7 @@ const Modal = ({ onClose }) => {
       protein: Number(protein),
       carbs: Number(carbs),
       fat: Number(fat),
+      date: (date)
     };
 
     addFood(newItemLogged);
@@ -36,6 +38,7 @@ const Modal = ({ onClose }) => {
     setProtein("");
     setCarbs("");
     setFat("");
+    setDate("")
     
     onClose();
     console.log(newItemLogged);
@@ -87,6 +90,12 @@ const Modal = ({ onClose }) => {
             value={fat}
             placeholder="Optional"
             onChange={(event) => setFat(event.target.value)} />
+          </label>
+
+          <label> Date
+            <input type="date"
+            value={date}
+            onChange={(event) => setDate(event.target.value)}/>
           </label>
 
           <input type="submit" value="Submit" className="mx-4 px-4 py-1 bg-blue-500 text-white rounded"/>
