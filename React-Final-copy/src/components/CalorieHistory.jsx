@@ -58,6 +58,8 @@ const CalorieHistory = (  ) => {
             setShowConfirmationModel(false);
       };
 
+
+      // Opens form editing
       const renderEditingForm = () => (
             <div className="p-4 border rounded bg-gray-100 mt-4 col-span-2">
                   <h2 className="font-bold mb-2 text-center">Edit Food Entry</h2>

@@ -1,6 +1,5 @@
 
 // This stores the user's entry 
-
 let trackedFoodData = [{
       foodName: "Ramen",
       calories: 120,

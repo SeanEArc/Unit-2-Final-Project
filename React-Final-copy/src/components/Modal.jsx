@@ -1,10 +1,9 @@
-import React, { useRef } from "react";
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { addFood } from './foodStorage'
 
-const Modal = ({ onClose }) => {
+// When onClose is equal to true, Modal will close
 
-  const modalRef = useRef();
+const Modal = ({ onClose }) => {
 
   const [foodName, setFoodName] = useState("");
   const [calories, setCalories] = useState("")
@@ -13,11 +12,16 @@ const Modal = ({ onClose }) => {
   const [fat, setFat] = useState("")
   const [date, setDate] = useState("")
 
+
+  const modalRef = useRef();
+
+  // Closes Modal if clicked outside of the Modal
   const closeModal = (event) => {
     if(modalRef.current === event.target)
       onClose()
   }
 
+  // Handle's submit
   const handleSubmit = (event) => {
     event.preventDefault(); 
 
@@ -32,7 +36,7 @@ const Modal = ({ onClose }) => {
 
     addFood(newItemLogged);
     
-    // Clear form after submit
+    // Clear's form after submit
     setFoodName("");
     setCalories("");
     setProtein("");
@@ -41,75 +45,91 @@ const Modal = ({ onClose }) => {
     setDate("")
     
     onClose();
+
     console.log(newItemLogged);
   };
       
   return (
+    // modalRef is now equal to the Modal Backdrop
     <div ref={modalRef} 
-      onClick={closeModal}
-      className="fixed inset-0 backdrop-blur-sm flex items-center justify-center">
+    onClick={closeModal}
+    className="flex fixed inset-0 backdrop-blur-sm items-center justify-center">
         
-      <div className="grid grid-row-6 bg-zinc-50 p-6 rounded-lg shadow-xl w-2/5 border">
+      <div className="grid grid-row-6 bg-zinc-50 p-6 rounded-lg shadow-xl w-[550px] max-w-[1000px] border">
 
-       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <h2 className="text-xl font-semibold mb-4 text-center">Log Food </h2>
+       <form onSubmit={handleSubmit} className="flex flex-col gap-1">
 
-          <label className=""> Name of food:
+          <h2 className="text-xl font-semibold text-center"> Log Food </h2>
+
+          <label className="font-bold flex flex-col text-md mb-1"> 
+          Name of food:
             <input type="text"
             value={foodName}
-            placeholder="Food item"
+            placeholder="Required"
             onChange={(event) => setFoodName(event.target.value)}
             required
-            className="underline nderline-offset-4 px-1"/>
+            className="mt-1 p-1 rounded-md border border-zinc-300 "/>
           </label> 
           
-          <label> Calories:  
+          <label className="font-bold flex flex-col text-md"> Calories:  
             <input type="number"
             value={calories} 
-            placeholder="Enter Calories"
+            placeholder="Required"
             onChange={(event) => setCalories(event.target.value)}
-            required/>
-          </label>
-          <h3 className="text-center font-bold"> Macro's </h3>
-
-          <label> Protein
-            <input type="number"
-            value={protein}
-            placeholder="Optional"
-            onChange={(event) => setProtein(event.target.value)} />
-          </label>
-          
-          <label> Carbs
-            <input type="number"
-            value={carbs}
-            placeholder="Optional"
-            onChange={(event) => setCarbs(event.target.value)} />
+            required
+            className="mt-1 p-1 rounded-md border border-zinc-300 "/>
           </label>
 
-          <label> Fats
-            <input type="number"
-            value={fat}
-            placeholder="Optional"
-            onChange={(event) => setFat(event.target.value)} />
-          </label>
+          <h3 className="text-center font-bold mt-4 mb-2"> Macro's </h3>
 
-          <label> Date
+          <div className="grid grid-cols-3 text-center mb-2">
+
+            <label className="font-bold flex flex-col text-md mb-1 "> 
+              Protein
+              <input type="number"
+              value={protein}
+              placeholder="Optional"
+              onChange={(event) => setProtein(event.target.value)}
+              className="mt-1 p-1 rounded-md border border-zinc-300 text-shadow-white" />
+            </label>
+            
+            <label className="font-bold flex flex-col text-md mb-1">
+              Carbs
+              <input type="number"
+              value={carbs}
+              placeholder="Optional"
+              onChange={(event) => setCarbs(event.target.value)}
+              className="mt-1 p-1 rounded-md border border-zinc-300 "/>
+            </label>
+
+            <label className="font-bold flex flex-col text-md mb-1">
+              Fats
+              <input type="number"
+              value={fat}
+              placeholder="Optional"
+              onChange={(event) => setFat(event.target.value)} 
+              className="mt-1 p-1 rounded-md border border-zinc-300 "/>
+            </label>
+
+          </div>
+
+          <label className="font-bold flex flex-col text-md mb-1"> 
+            Date
             <input type="date"
             value={date}
             onChange={(event) => setDate(event.target.value)}/>
           </label>
 
-          <input type="submit" value="Submit" className="mx-4 px-4 py-1 bg-blue-500 text-white rounded"/>
+          <input type="submit" value="Submit" className="mt-2 px-4 py-2 bg-blue-500 text-white shadow-md rounded hover:bg-blue-600 hover:scale-101"/>
+
+          <button
+          onClick={onClose}
+          className="mt-2 px-4 py-2 bg-red-500 text-white shadow-md rounded hover:bg-red-600 hover:scale-101">
+          Close
+          </button>
 
         </form>
 
-        <button
-          onClick={onClose}
-          className="mt-4 px-4 py-2 bg-red-500 text-white rounded"
-        >
-          Close
-        </button>
-        
       </div>
     </div>
   )
