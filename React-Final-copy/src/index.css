@@ -15,20 +15,18 @@
 footer {
   position: fixed;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 28px;
   max-height: 50px;
 }
 
 h1 { 
     display: block;
     font-size: 2em;
-    margin-top: 0.67em;
-    margin-bottom: 0.67em;
     margin-left: 0;
     margin-right: 0;
     font-weight: bold;
@@ -36,8 +34,6 @@ h1 {
 h2 {
     display: block;
     font-size: 1.5em;
-    margin-top: 0.83em;
-    margin-bottom: 0.83em;
     margin-left: 0;
     margin-right: 0;
     font-weight: bold;
@@ -45,21 +41,47 @@ h2 {
 h3 { 
     display: block;
     font-size: 1.17em;
-    font-weight: bold;
-}
-h4 { 
-    display: block;
-    margin-top: 1.33em;
-    margin-bottom: 1.33em;
     margin-left: 0;
     margin-right: 0;
     font-weight: bold;
 }
+h4 { 
+    display: block;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+    
+}
 h5 { 
     display: block;
     font-size: .83em;
-    margin-top: 1.67em;
-    margin-bottom: 1.67em;
     margin-left: 0;
 }
+
+.log-food-button,
+.calorie-history-link{
+    transition: 125ms linear 50ms;
+    background-color: #60a5fa;
+    color: white;
+    font-weight: 700;
+    box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.5); 
+    font-size: 1.5rem; 
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 125ms ease, background-color 300ms ease;
+}
+
+.log-food-button:hover, 
+.calorie-history-link:hover {
+  transform: scale(1.05);
+  background-color: #3b82f6;
+  cursor: pointer;
+}
+
+button {
+    cursor: pointer;
+}
+
+
 

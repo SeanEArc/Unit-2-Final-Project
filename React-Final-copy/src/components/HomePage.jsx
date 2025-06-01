@@ -15,15 +15,13 @@ const HomePage = () => {
         <h1 className="flex-auto col-start-4 col-end-7 row-start-2 text-6xl font-bold mb-4 text-center "> Dashboard</h1>
 
         <button
-          className="flex-auto col-start-3 col-end-5 row-start-3 row-end-8 h-full bg-blue-400 rounded text-white font-bold shadow-2xl text-2xl p-1
-          hover:bg-blue-500 hover:cursor-pointer hover:scale-105"
+          className="log-food-button flex-auto col-start-3 col-end-5 row-start-3 row-end-8 h-full bg-blue-400 rounded text-white font-bold shadow-2xl"
           onClick={() => setShowModal(true)}>
           Log Calories
         </button>
 
         <Link to="/CalorieHistory"
-          className="flex flex-auto col-start-6 col-end-8 row-start-3 row-end-8 h-full bg-blue-400 rounded text-white font-bold shadow-2xl text-2xl p-1
-         hover:bg-blue-500 hover:cursor-pointer hover:scale-105 items-center justify-center">
+          className="calorie-history-link flex flex-auto col-start-6 col-end-8 row-start-3 row-end-8 h-full bg-blue-400 rounded shadow-2xl">
           Calorie History
         </Link>
 
