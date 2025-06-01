@@ -22,7 +22,7 @@ const TopOfPage = ( ) => {
 
                         <Link to='/HowItWorks' className="how-it-works-link flex-auto col-start-3 hover:bg-cyan-200 p-0.5 rounded"> How it works </Link>
 
-                        <Link to='/CalorieHistory' className="flex-auto col-start-4 hover:bg-cyan-200 p-0.5 rounded"> Food History </Link>
+                        <Link to='/CalorieHistory' className="flex-auto col-start-4 hover:bg-cyan-200 p-0.5 rounded"> Calorie History </Link>
 
                   </div>
 

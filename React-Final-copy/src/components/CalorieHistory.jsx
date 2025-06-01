@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react"
 import { getTrackedFood, subscribeToFoodUpdates, formatNumber, addedItems, deleteFood, updateEntry} from './foodStorage';
 import ConfirmationModal from "./ConfirmationModal";
-import BalancedMeal from '../assets/foodIcons/BalancedMeal.png';
-import Protein from '../assets/foodIcons/Protein.png';
-import Carbs from '../assets/foodIcons/Carbs.png';
-import Fats from '../assets/foodIcons/Fats.png';
+import {BalancedMeal, Protein, Carbs, Fats} from '../assets/foodIcons/foodIcons'
+import EditingForm from "./EditingForm";
 
 
-const CalorieHistory = (  ) => {
+const CalorieHistory = () => {
 
 	const [trackedFood, setTrackedFood] = useState([]);
 	const [editingIndex, setEditingIndex] = useState(null);
@@ -20,7 +18,6 @@ const CalorieHistory = (  ) => {
 	const totalProtein = addedItems(trackedFood, 'protein')
 	const totalCarbs = addedItems(trackedFood, 'carbs')
 	const totalFat = addedItems(trackedFood, 'fat')
-	
 
 
 	// Updates trackedFood whenever addFood is used in Modal.jsx.
@@ -46,7 +43,6 @@ const CalorieHistory = (  ) => {
 	};
 	
 
-
 	// Set's values of UseState's.
 	const handleModify = (index) => {
 		setEditingIndex(index)
@@ -64,86 +60,6 @@ const CalorieHistory = (  ) => {
 		});
 	setEditingIndex(null);
 	};
-
-	// Opens editing form. 
-	const renderEditingForm = () => (
-		<div className="p-4 border rounded bg-gray-100 mt-4">
-				<h2 className="font-bold mb-2 text-center"> Edit Food Entry </h2>
-
-				<label className="font-bold">
-					Food Name:
-					<input
-					className="mb-2 p-1 w-full font-normal"
-					placeholder="Food Name"
-					value={editForm.foodName}
-					onChange={(e) =>
-					setEditForm({ ...editForm, foodName: e.target.value })}/>
-
-				</label>
-
-				<label className="font-bold">
-					Calories:
-				
-					<input
-					className="mb-2 p-1 w-full font-normal"
-					placeholder="Calories"
-					type="number"
-					value={editForm.calories}
-					onChange={(e) =>
-					setEditForm({ ...editForm, calories: e.target.value })}/>
-
-				</label>
-
-				<label className="font-bold">
-					Protein:
-					<input
-					className="mb-2 p-1 w-full font-normal"
-					placeholder="Protein"
-					type="number"
-					value={editForm.protein}
-					onChange={(e) =>
-					setEditForm({ ...editForm, protein: e.target.value })}/>
-
-				</label>
-
-
-				<label className="font-bold">
-					Carbs:                  
-					<input
-					className="mb-2 p-1 w-full font-normal"
-					placeholder="Carbs"
-					type="number"
-					value={editForm.carbs}
-					onChange={(e) =>
-					setEditForm({ ...editForm, carbs: e.target.value })}/>
-				</label>
-
-				<label className="font-bold">
-					Fats:                                    
-					<input
-					className="mb-2 p-1 w-full font-normal"
-					placeholder="Fat"
-					type="number"
-					value={editForm.fat}
-					onChange={(e) => setEditForm({ ...editForm, fat: e.target.value })}/>
-				</label>
-
-				<div className="flex justify-center items-center">
-					<button
-					className="bg-blue-500 text-white px-20 py-2 mr-2 rounded hover:bg-blue-600"
-					onClick={handleUpdate}>
-					Save
-					</button>
-
-					<button
-					className="bg-red-500 px-20 py-2 rounded hover:bg-red-600"
-					onClick={() => setEditingIndex(null)}>
-					Cancel
-					</button>
-				</div>
-
-		</div>
-	);
 
 	// Get's an image dependant on the foods Macros. If 2 food items are equal or all are zero, then the balanced meal image will display.
 	const getFoodImage = (food) => {
@@ -218,14 +134,14 @@ const CalorieHistory = (  ) => {
 
 													<button
 													onClick={() =>handleModify(index)}
-													className="w-full h-[40%] py-2 px-4 bg-gray-500 rounded font-bold hover:bg-gray-400 hover:bg-gradient-to-b"> Modify </button>
+													className="w-full h-[40%] py-2 px-4 bg-gray-500 rounded text-lg font-semibold hover:bg-gray-400 hover:bg-gradient-to-b"> Modify </button>
 													
 														<button 
 														onClick={() => {setDeleteIndex(index);
 														setShowConfirmationModel(true);
 														}}
 
-														className="w-full h-[40%] py-2 px-4 rounded font-bold bg-red-500 hover:bg-red-400">
+														className="w-full h-[40%] py-2 px-4 text-lg rounded font-semibold bg-red-500 hover:bg-red-400">
 														Delete
 														</button>
 
@@ -285,8 +201,14 @@ const CalorieHistory = (  ) => {
 
 
 											</div>
-											{editingIndex !== null && renderEditingForm()}
-																																			
+
+												{editingIndex !== null && (
+												<EditingForm
+													editForm={editForm}
+													setEditForm={setEditForm}
+													handleUpdate={handleUpdate}
+													cancelEdit={() => setEditingIndex(null)}/>
+												)}
 
 									</div>
 									

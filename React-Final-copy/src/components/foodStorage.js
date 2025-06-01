@@ -10,14 +10,22 @@ let trackedFoodData = [{
     {
       foodName: "Salmon",
       calories: 100,
-      protein: 14,
+      protein: 15,
       carbs: 9,
       fat: 7,
+    },
+    {
+      foodName: "Oil",
+      calories: 100,
+      protein: 1,
+      carbs: 1,
+      fat: 10,
     }
   ];
 
 let listeners = [];
 
+// Add's item to array
 export const addFood = (newFood) => {
       trackedFoodData = [...trackedFoodData, newFood];
 
@@ -26,6 +34,7 @@ export const addFood = (newFood) => {
 
       console.log(trackedFoodData)
 };
+
 
 export const getTrackedFood = () => trackedFoodData;
 
@@ -39,21 +48,24 @@ export const subscribeToFoodUpdates = (callback) => {
   };
 };
 
+
+// Format's food to decmial
 export const formatNumber = (number) => {
   return new Intl.NumberFormat('en-US').format(number);
 }
 
+// Total's the values for each object in the array
 export const addedItems = (object, entryType) => {
   return object.reduce((acc, curr) => acc + curr[entryType], 0)
 }
 
-
-
+// Removes the indexed item from the array
 export const deleteFood = (index) => {
   trackedFoodData = trackedFoodData.filter((_, i) => i !== index);
   listeners.forEach(listener => listener(trackedFoodData));
 };
 
+//Updates the object value in the array
 export const updateEntry = (index, updatedFood) => {
   trackedFoodData[index] = updatedFood
   listeners.forEach(listener => listener(trackedFoodData))

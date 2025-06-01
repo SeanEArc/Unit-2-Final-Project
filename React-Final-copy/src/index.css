@@ -84,4 +84,48 @@ button {
 }
 
 
+.how-it-works-container {
+  margin: 2.5rem;
+  text-align: center;
+}
 
+.how-it-works-title {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.how-it-works-table-wrapper {
+  overflow-x: auto;
+}
+
+.how-it-works-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.how-it-works-table th,
+.how-it-works-table td {
+  padding: 1rem;
+  text-align: center;
+  vertical-align: top;
+}
+
+.label-row {
+  background-color: #f9fafb; /* Tailwind's bg-gray-50 */
+  font-weight: 500;
+}
+
+.icon-img {
+  height: 5rem;
+  width: 5rem;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.description-row td {
+  font-size: 0.9rem;
+  color: #4b5563; /* Tailwind's text-gray-700 */
+}

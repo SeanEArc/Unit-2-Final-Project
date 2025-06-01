@@ -10,7 +10,6 @@ const Modal = ({ onClose }) => {
   const [protein, setProtein] = useState("")
   const [carbs, setCarbs] = useState("")
   const [fat, setFat] = useState("")
-  const [date, setDate] = useState("")
 
 
   const modalRef = useRef();
@@ -31,7 +30,6 @@ const Modal = ({ onClose }) => {
       protein: Number(protein),
       carbs: Number(carbs),
       fat: Number(fat),
-      date: (date)
     };
 
     addFood(newItemLogged);
@@ -42,7 +40,6 @@ const Modal = ({ onClose }) => {
     setProtein("");
     setCarbs("");
     setFat("");
-    setDate("")
     
     onClose();
 
@@ -53,13 +50,15 @@ const Modal = ({ onClose }) => {
     // modalRef is now equal to the Modal Backdrop
     <div ref={modalRef} 
     onClick={closeModal}
-    className="flex fixed inset-0 backdrop-blur-sm items-center justify-center">
+    className="flex fixed inset-0 backdrop-blur-sm items-center justify-center z-50">
         
       <div className="grid grid-row-6 bg-zinc-50 p-6 rounded-lg shadow-xl w-[550px] max-w-[1000px] border">
 
-       <form onSubmit={handleSubmit} className="flex flex-col gap-1">
+       <form id='Log Food Item' onSubmit={handleSubmit} className="flex flex-col gap-1">
 
           <h2 className="text-xl font-semibold text-center"> Log Food </h2>
+
+          
 
           <label className="font-bold flex flex-col text-md mb-1"> 
           Name of food:
@@ -80,7 +79,9 @@ const Modal = ({ onClose }) => {
             className="mt-1 p-1 rounded-md border border-zinc-300 "/>
           </label>
 
-          <h3 className="text-center font-bold mt-4 mb-2"> Macro's </h3>
+          <h2 className="text-center font-bold mt-4 mb-2 "> Macro's </h2>
+
+
 
           <div className="grid grid-cols-3 text-center mb-2">
 
@@ -113,14 +114,10 @@ const Modal = ({ onClose }) => {
 
           </div>
 
-          <label className="font-bold flex flex-col text-md mb-1"> 
-            Date
-            <input type="date"
-            value={date}
-            onChange={(event) => setDate(event.target.value)}/>
-          </label>
+            <hr className="mb-1 border-t border-zinc-300 opacity-50" />
 
-          <input type="submit" value="Submit" className="mt-2 px-4 py-2 bg-blue-500 text-white shadow-md rounded hover:bg-blue-600 hover:scale-101"/>
+
+          <input type="submit" value="Submit" className="mt-2 px-4 py-2 bg-blue-500 text-white shadow-md rounded hover:cursor-pointer hover:bg-blue-600 hover:scale-101"/>
 
           <button
           onClick={onClose}
