@@ -7,6 +7,8 @@ import CalorieHistory from './components/CalorieHistory'
 import TopOfPage from './components/TopOfPage'
 import HowItWorks from './components/HowItWorks'
 
+
+// Make sure to delete this
 const App = () => {
 
   // Handles Quick Log
