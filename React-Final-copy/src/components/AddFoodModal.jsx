@@ -80,7 +80,6 @@ const AddFoodModal = ({ onClose }) => {
 				<h2 className="text-center font-bold mt-4 mb-2 "> Macro's </h2>
 
 
-
 				<div className="grid grid-cols-3 text-center mb-2">
 
 					<label className="font-bold flex flex-col text-md mb-1 "> 

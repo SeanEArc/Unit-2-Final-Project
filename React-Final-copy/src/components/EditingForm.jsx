@@ -24,7 +24,7 @@ const EditingForm = ( { editForm, setEditForm, handleUpdate, cancelEdit } ) => {
 						value={editForm[key]}
 						onChange={(e) =>
 						setEditForm({ ...editForm, [key]: e.target.value })
-						}/>
+					}/>
 						
 				</label>
 			))}

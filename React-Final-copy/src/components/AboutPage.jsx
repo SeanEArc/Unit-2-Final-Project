@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import profilePicture from '../assets/Profile-Picture.jpg'
+import logo from '../assets/logo.png'
 
 const AboutPage = () => {
 
@@ -85,11 +85,12 @@ const AboutPage = () => {
 
                               <div className='md:my-3 sm:my-0'>
                                     
-                                    <img src={profilePicture}
-                                    alt='Picture of our founder'
-                                    className='mx-auto border shadow mb-2 rounded'/>
+                                    <img src={logo}
+                                    alt='Our Founder'
+                                    className='mx-auto md:h-50 sm:10 border shadow mb-2 rounded-full'/>
 
                                     <h2> Founder of Calorie Counter </h2>
+                                    <p className='text-gray-600'> *He doesn't like portraits so here is our logo </p>
 
                               </div>
 
@@ -97,7 +98,7 @@ const AboutPage = () => {
 
                                     <h2> There's not to much to this story </h2>
 
-                                    <p className='py-2'> Born in the United Kingdom and raised in the United States, Sean A. is an aspiring software developer that is still learning the ropes. Everyday, he learns more and more about the software developer journey and will continue to make projects that make's him a better problem solver!  </p>
+                                    <p className='py-2'> Born in the United Kingdom and raised in the United States, SEEA. is an aspiring software developer that is still learning the ropes. Everyday, he learns more and more about the software developer journey and will continue to make projects that make's him a better problem solver!  </p>
 
                               </div>
 

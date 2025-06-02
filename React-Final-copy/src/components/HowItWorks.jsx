@@ -27,11 +27,11 @@ const HowItWorks = () => {
                               <p className='text-gray-600 text-pretty'> To log an item, just click on the "Log Food" or "Quick Log" button </p>
 
                               <img src={logCaloriesImage}
-                              alt='Log-Calories-Image'
+                              alt='Log Calories Image'
                               className='mx-auto border shadow mb-2 rounded'/>
 
                               <img src={quickLogImage}
-                              alt='Quick-Log-Image'
+                              alt='Quick Log Image'
                               className='mx-auto border shadow'/>
                               
                               <p className='text-gray-600 text-pretty'> *These button's is for reference only</p>
@@ -44,7 +44,7 @@ const HowItWorks = () => {
                               <p className='text-gray-600 text-pretty'> Follow the form's input. Please note, Macro input is option; however, it is recommended </p>
 
                               <img src={logFoodImage}
-                              alt='Log-Food-Image'
+                              alt='Log Food Details Image'
                               className='mx-auto border shadow rounded-2xl scale-90'/>
 
                         </div>
@@ -55,7 +55,7 @@ const HowItWorks = () => {
                               <p className='text-gray-600 text-pretty pb-2'> The "Calorie History" button's will display all of your logged item's and add up all of your inputs! </p>
                               
                               <img src={calorieHistoryImage}
-                              alt='Calorie-History-Image'
+                              alt='Calorie History Example Image'
                               className='mx-auto border shadow rounded-2xl'/>
 
                         </div>
@@ -68,14 +68,14 @@ const HowItWorks = () => {
                               <p className='text-gray-600 text-pretty'> Click on modify and underneath our totaled calculations will display an editing form </p>
                               
                               <img src={modifyButtonImage}
-                              alt='Modify-Button-Image'
+                              alt='Modify Button Image'
                               className='mx-auto border shadow rounded-2xl scale-90'/>
                               
                               <h2 className='pt-4'> Want to remove an entry? </h2>
                               <p className='text-gray-600 text-pretty'> Follow the form's input. Please note, Macro input is option; however, it is recommended </p>
                               
                               <img src={deleteButtonImage}
-                              alt='Delete-Button-Image'
+                              alt='Delete Button Image'
                               className='mx-auto border shadow rounded-2xl'/>
 
                         </div>
@@ -86,7 +86,7 @@ const HowItWorks = () => {
                               <p className='text-gray-600 text-pretty'> Update the value's you want and our software will update the numbers automatically! </p>
 
                               <img src={editingImage}
-                              alt='Editing-Image'
+                              alt='Editing Example Image'
                               className='mx-auto border shadow rounded-2xl scale-90'/>
 
                         </div>
@@ -108,7 +108,9 @@ const HowItWorks = () => {
                                           <tr className='text-center'>
 
                                                 <th className='px-4 py-4'> 
-                                                      <img src={Protein} className='h-25 w-25 object-contain mx-auto'/> 
+                                                      <img src={Protein} 
+                                                      alt=""
+                                                      className='h-25 w-25 object-contain mx-auto'/> 
                                                 </th>
 
                                                 <th className='px-4 py-4'> 
