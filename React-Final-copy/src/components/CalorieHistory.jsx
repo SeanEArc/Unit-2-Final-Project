@@ -3,6 +3,7 @@ import { getTrackedFood, subscribeToFoodUpdates, formatNumber, addedItems, delet
 import ConfirmationModal from "./ConfirmationModal";
 import {BalancedMeal, Protein, Carbs, Fats} from '../assets/foodIcons/foodIcons'
 import EditingForm from "./EditingForm";
+import "./CalorieHistoryStyling.css";
 
 
 const CalorieHistory = () => {
@@ -25,7 +26,7 @@ const CalorieHistory = () => {
 		setTrackedFood(getTrackedFood());
 	
 		const unsubscribe = subscribeToFoodUpdates((updatedFood) => {
-				setTrackedFood(updatedFood);
+			setTrackedFood(updatedFood);
 		});
 		
 		//Stops tracking of the item added to the array. 
@@ -36,8 +37,8 @@ const CalorieHistory = () => {
 	// Handle's delete entry
 	const handleConfirmDelete = () => {
 		if (deleteIndex !== null) {
-		deleteFood(deleteIndex);
-		setDeleteIndex(null);
+			deleteFood(deleteIndex);
+			setDeleteIndex(null);
 		}
 		setShowConfirmationModel(false);
 	};
@@ -79,144 +80,137 @@ const CalorieHistory = () => {
 		if (fat > protein && fat > carbs) return Fats;
 
 		return BalancedMeal;
-};
+	};
 
 	return(
 		<div className="">
 		
-			<div className="flex w-full max-w-[90%] justify-center items-center mx-auto mb-10">
+			<div className="history-container flex w-full max-w-[90%] justify-center items-center mx-auto mb-10">
 
-					<div className="flex-auto grid grid-cols-[60%_40%] mt-10">
-						
-						{trackedFood.length > 0 ? (
-						<div className="flex-row">
-								<h2 className="text-center">Logged Foods:</h2>
-								{trackedFood.map((food, index) => (
-									<div key={index} className="border p-3 m-2 rounded col-span-1">
-											
+				<div className="flex-auto grid md:grid-cols-[60%_40%] mt-10">
+					
+					{trackedFood.length > 0 ? (
+					<div className="">
+							<h2 className="text-center">Logged Foods:</h2>
+							{trackedFood.map((food, index) => (
+								<div key={index} className="food-entry border p-3 m-2 rounded col-span-1">
+										
+									<div className="grid grid-cols-[20%_50%_30%]">
 
-										<div className="grid grid-cols-[20%_50%_30%]">
+										<div className="flex items-center justify-center">
 
+											<img src={getFoodImage(food)}
+											alt="Macro-Type"
+											className="h-25 aspect-square mx-auto"/>
 
-											<div className="flex items-center justify-center">
+										</div>                                               
+										
+										<div className="grid grid-cols-2 flex-auto p-2">
 
-											<img
-											src={getFoodImage(food)}
-											alt="Macro Type"
-											className="h-25 aspect-square mx-auto"
-											/>
-
-											</div>                                               
-											
-
-											<div className="grid grid-cols-2 flex-auto p-2">
-
-												<div className="ml-5">
-														
-													<h2 className="">{food.foodName}</h2>
-													<p>Calories: {food.calories}</p>
-
-												</div>
-
-												<div>
-													<h2> Macros:</h2>
-													{food.protein > 0 && <p> Protein: {food.protein}g</p>}
-													{food.carbs > 0 && <p> Carbs: {food.carbs}g</p>}
-													{food.fat > 0 && <p> Fats: {food.fat}g</p>}
-													{food.protein < 1 && food.fat < 1 && food.carbs < 1 && (<p> Empty </p>)}
-
-												</div>
+											<div className="ml-5">
+													
+												<h2 className="">{food.foodName}</h2>
+												<p>Calories: {food.calories}</p>
 
 											</div>
-
-
-												<div className="flex flex-col justify-center items-center gap-2">
-
-													<button
-													onClick={() =>handleModify(index)}
-													className="w-full h-[40%] py-2 px-4 bg-gray-500 rounded text-lg font-semibold hover:bg-gray-400 hover:bg-gradient-to-b"> Modify </button>
-													
-														<button 
-														onClick={() => {setDeleteIndex(index);
-														setShowConfirmationModel(true);
-														}}
-
-														className="w-full h-[40%] py-2 px-4 text-lg rounded font-semibold bg-red-500 hover:bg-red-400">
-														Delete
-														</button>
-
-														{showConfirmationModel && (
-														<ConfirmationModal
-														onClose={() => {
-														setShowConfirmationModel(false);
-														setDeleteIndex(null);}}
-														onConfirm={handleConfirmDelete}/>)}
-
-												</div>
-
-										</div>
-									
-									</div>
-								))}
-						</div>
-						) : (
-						<div> 
-								<h2 className="flex flex-auto text-center font-bold"> - Nothing has been logged yet - </h2>
-						</div>
-						)}
-
-						<div className="flex flex-auto ml-4 col-2">
-
-									<div className="col-start-1 mt-10">
 
 											<div>
-												<h1 className="text-center"> Total Calories Consumed: </h1>
-											
-												<h2 className="text-center m-2"> {formatNumber
-												(totalCalories)} kcal </h2>
+
+												<h2> Macros:</h2>
+												{food.protein > 0 && <p> Protein: {food.protein}g</p>}
+												{food.carbs > 0 && <p> Carbs: {food.carbs}g</p>}
+												{food.fat > 0 && <p> Fats: {food.fat}g</p>}
+												{food.protein < 1 && food.fat < 1 && food.carbs < 1 && (<p> Empty </p>)}
+
 											</div>
-											
-											<div className="m-2 mt-10">
-											
-												<h1 className="text-center m-2">Total Macro's: </h1>
 
-												<ul className="grid grid-cols-2 text-center">
-														<li>
-															<h2 className="p-1">Protein: {totalProtein}g </h2>
-														</li>
+										</div>
 
-														<li>
-															<h2 className="p-1">Carbs: {totalCarbs}g </h2>
-														</li>
 
-														<li className="col-span-2">
-															<h2 className="p-1">Fats: {totalFat}g </h2>
-														</li>
+											<div className="food-buttons flex flex-col justify-center items-center gap-2">
 
-														
+												<button
 
-												</ul>
+													onClick={() =>handleModify(index)}
+
+													className="w-full h-[40%] py-2 px-4 bg-gray-500 rounded text-lg font-semibold hover:bg-gray-400 hover:bg-gradient-to-b"> 
+												
+													Modify 
+												</button>
 
 												
+												<button 
+													onClick={() => {setDeleteIndex(index);
+													setShowConfirmationModel(true);}}
 
+													className="w-full h-[40%] py-2 px-4 text-lg rounded font-semibold bg-red-500 hover:bg-red-400">
+													Delete
+												</button>
+
+													{showConfirmationModel && (
+													<ConfirmationModal
+													onClose={() => {
+													setShowConfirmationModel(false);
+													setDeleteIndex(null);}}
+													onConfirm={handleConfirmDelete}/>)}
 
 											</div>
 
-												{editingIndex !== null && (
-												<EditingForm
-													editForm={editForm}
-													setEditForm={setEditForm}
-													handleUpdate={handleUpdate}
-													cancelEdit={() => setEditingIndex(null)}/>
-												)}
-
 									</div>
-									
+								
+								</div>
+							))}
+					</div>
+					) : (
+					<div> 
+						<h2 className="flex flex-auto text-center font-bold"> - Nothing has been logged yet - </h2>
+					</div>
+					)}
 
+					<div className="flex flex-auto ml-4 col-2">
+
+						<div className="col-start-1 mt-10">
+
+							<div>
+								<h1 className="text-center"> Total Calories Consumed: </h1>
+							
+								<h2 className="text-center m-2"> {formatNumber(totalCalories)} kcal </h2>
+
+							</div>
+							
+							<div className="m-2 mt-10">
+							
+								<h1 className="text-center m-2">Total Macro's: </h1>
+
+								<ul className="grid grid-cols-2 text-center">
+
+									<li>
+										<h2 className="p-1">Protein: {totalProtein}g </h2>
+									</li>
+
+									<li>
+										<h2 className="p-1">Carbs: {totalCarbs}g </h2>
+									</li>
+
+									<li className="col-span-2">
+										<h2 className="p-1">Fats: {totalFat}g </h2>
+									</li>
+
+								</ul>
+
+							</div>
+
+									{editingIndex !== null && (
+									<EditingForm
+										editForm={editForm}
+										setEditForm={setEditForm}
+										handleUpdate={handleUpdate}
+										cancelEdit={() => setEditingIndex(null)}/>
+									)}
 
 						</div>
 					</div>
-
+				</div>
 			</div>
 		</div>
 	)

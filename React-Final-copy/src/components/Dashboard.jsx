@@ -1,36 +1,71 @@
-import Modal from "./Modal"
+import './DashboardStyling.css'
+import AddFoodModal from "./AddFoodModal"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
-const HomePage = () => {
-  const [showModal, setShowModal] = useState(false)
 
-  return (
-    <div className="bg-zinc-50">
+const Dashboard = () => {
 
-    <div className="flex w-full max-w-[90%] justify-center items-center mx-auto"> 
+	const [showModal, setShowModal] = useState(false)
 
-      <div className='grid grid-cols-9 grid-rows-10 flex-auto '>
+	//Reusable button
+	const buttonStylings = "text-2xl font-bold md:text-2xl h-24 md:h-40 lg:h-40 px-4 md:px-6 w-full flex items-center justify-center bg-blue-400 text-white rounded-2xl shadow-xl hover:bg-blue-500 transition-transform transition-colors duration-300 ease-in-out"
 
-        <h1 className="flex-auto col-start-4 col-end-7 row-start-2 text-6xl font-bold mb-4 text-center "> Dashboard</h1>
+	return (
+		
+		<div className="flex w-full h-full md:justify-center sm:justify-center items-center my-auto bg-zinc-50 mt-15">
 
-        <button
-          className="log-food-button flex-auto col-start-3 col-end-5 row-start-3 row-end-8 h-full bg-blue-400 rounded text-white font-bold shadow-2xl"
-          onClick={() => setShowModal(true)}>
-          Log Calories
-        </button>
+			<div className="dashboard-grid grid grid-cols-2 grid-rows-3 gap-6 max-w-6xl">
 
-        <Link to="/CalorieHistory"
-          className="calorie-history-link flex flex-auto col-start-6 col-end-8 row-start-3 row-end-8 h-full bg-blue-400 rounded shadow-2xl">
-          Calorie History
-        </Link>
+				<div className='flex col-span-2 justify-center items-center'>
 
-        {showModal && <Modal onClose={() => setShowModal(false)} />}
+					<p className="text-5xl font-bold text-center mt-0 pt-0">
+					Welcome to Calorie Counter!
+					</p>
+					
+				</div>
 
-      </div>
-    </div>  
-    </div>
-  )
+				<div>
+
+					<button
+						onClick={() => setShowModal(true)}
+						className={`${buttonStylings} small-log-food-button `} >
+						Log Calories
+					</button>
+
+				</div>
+
+				<div>
+
+					<Link
+						to="/caloriehistory"
+						className={`${buttonStylings} small-link-styles`}>
+						Calorie History
+					</Link>
+
+				</div>
+
+				<div>
+					<Link to='/howitworks'
+						className={`${buttonStylings} small-link-styles`}>
+						How does this work?
+					</Link>
+				</div>
+
+				<div>
+					<Link
+						to="/about"
+						className={`${buttonStylings} small-link-styles`}>
+						Want to Learn More About Us?
+					</Link>
+				</div>
+
+				{showModal && <AddFoodModal onClose={() => setShowModal(false)} />}
+
+			</div>
+		</div>
+
+	)
 }
 
-export default HomePage
+export default Dashboard

@@ -1,4 +1,3 @@
-
 import './index.css'
 import Dashboard from './components/Dashboard'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
@@ -13,27 +12,27 @@ const App = () => {
   // Handles Quick Log
   const handleAddEntry = (newEntry) => {
     setEntries((prev) => [...prev, newEntry]);
-    console.log("Entry added:", newEntry); 
   };
 
   return (
 
     <div className='App'>
-      <BrowserRouter>
 
+      <BrowserRouter>
 
         <TopOfPage onSubmitEntry={handleAddEntry}/>
           
           <Routes>
             <Route path='/' element={<Dashboard />}/>
-            <Route path='/CalorieHistory'element={<CalorieHistory/>}/>
-            <Route path='/HowItWorks' element={<HowItWorks/>}/>
-            <Route path='/About' element={<AboutPage/>}/>
+            <Route path='/calorieHistory'element={<CalorieHistory/>}/>
+            <Route path='/howItWorks' element={<HowItWorks/>}/>
+            <Route path='/about' element={<AboutPage/>}/>
           </Routes>
 
         <Footer/> 
 
       </BrowserRouter>
+      
     </div>
 
   )

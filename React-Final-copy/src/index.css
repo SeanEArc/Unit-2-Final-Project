@@ -2,7 +2,7 @@
 
 :root {
   max-width: 100%;
-  min-width: 400px;
+  min-width: 300px;
   background: var(--color-zinc-50);
 }
 
@@ -58,74 +58,10 @@ h5 {
     margin-left: 0;
 }
 
-.log-food-button,
-.calorie-history-link{
-    transition: 125ms linear 50ms;
-    background-color: #60a5fa;
-    color: white;
-    font-weight: 700;
-    box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.5); 
-    font-size: 1.5rem; 
-    align-items: center; 
-    justify-content: center;
-    cursor: pointer;
-    transition: transform 125ms ease, background-color 300ms ease;
-}
-
-.log-food-button:hover, 
-.calorie-history-link:hover {
-  transform: scale(1.05);
-  background-color: #3b82f6;
-  cursor: pointer;
-}
 
 button {
     cursor: pointer;
 }
 
 
-.how-it-works-container {
-  margin: 2.5rem;
-  text-align: center;
-}
 
-.how-it-works-title {
-  font-size: 1.875rem; /* text-3xl */
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-}
-
-.how-it-works-table-wrapper {
-  overflow-x: auto;
-}
-
-.how-it-works-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: auto;
-}
-
-.how-it-works-table th,
-.how-it-works-table td {
-  padding: 1rem;
-  text-align: center;
-  vertical-align: top;
-}
-
-.label-row {
-  background-color: #f9fafb; /* Tailwind's bg-gray-50 */
-  font-weight: 500;
-}
-
-.icon-img {
-  height: 5rem;
-  width: 5rem;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto;
-}
-
-.description-row td {
-  font-size: 0.9rem;
-  color: #4b5563; /* Tailwind's text-gray-700 */
-}
