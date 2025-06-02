@@ -38,8 +38,9 @@ export const addedItems = (object, entryType) => {
 }
 
 // Removes the indexed item from the array
+// First perameter in filter is unused
 export const deleteFood = (index) => {
-  trackedFoodData = trackedFoodData.filter((_, i) => i !== index);
+  trackedFoodData = trackedFoodData.filter((foodItem, i) => i !== index);
   listeners.forEach(listener => listener(trackedFoodData));
 };
 

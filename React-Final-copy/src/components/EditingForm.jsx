@@ -23,8 +23,7 @@ const EditingForm = ( { editForm, setEditForm, handleUpdate, cancelEdit } ) => {
 						type={type}
 						value={editForm[key]}
 						onChange={(e) =>
-						setEditForm({ ...editForm, [key]: e.target.value })
-					}/>
+						setEditForm({ ...editForm, [key]: e.target.value })}/>
 						
 				</label>
 			))}
@@ -32,15 +31,13 @@ const EditingForm = ( { editForm, setEditForm, handleUpdate, cancelEdit } ) => {
 			<div className="flex justify-center items-center">
 				<button
 				className="bg-blue-500 text-zinc-200 px-20 py-2 mr-2 rounded font-semibold hover:bg-blue-600 hover:text-white"
-				onClick={handleUpdate}
-				>
+				onClick={handleUpdate}>
 				Save
 				</button>
 
 				<button
 				className="bg-red-500 text-gray-900 px-20 py-2 rounded hover:bg-red-600 font-semibold hover:text-black"
-				onClick={cancelEdit}
-				>
+				onClick={cancelEdit}>
 				Cancel
 				</button>
 			</div>
