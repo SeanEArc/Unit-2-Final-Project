@@ -15,10 +15,60 @@ public class User {
     private String name;
     private String username;
     private String password;
-    private String Password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<LoggedFoods> loggedFoods;
 
+    // ------------------------ Constructors ---------------------------------
+    public User() {}
 
+    public User(int id, String name, String username, String password) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+    }
+
+    // ------------------------ Getters and Setters -----------------------------------------------
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<LoggedFoods> getLoggedFoods() {
+        return loggedFoods;
+    }
+
+    public void setLoggedFoods(List<LoggedFoods> loggedFoods) {
+        this.loggedFoods = loggedFoods;
+    }
 }

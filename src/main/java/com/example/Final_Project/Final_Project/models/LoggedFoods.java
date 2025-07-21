@@ -31,6 +31,11 @@ public class LoggedFoods {
         this.loggedFoodItems = loggedFoodItems;
     }
 
+    public LoggedFoods(LocalDate date, User user) {
+        this.date = date;
+        this.user = user;
+    }
+
     // ------------------------Getters and Setters -----------------------------------------------
 
     public int getFoodId() {
