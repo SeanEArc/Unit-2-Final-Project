@@ -10,7 +10,7 @@ public class LoggedFoods {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int foodId;
+    private int Id;
 
     private LocalDate date;
 
@@ -34,11 +34,11 @@ public class LoggedFoods {
     // ------------------------Getters and Setters -----------------------------------------------
 
     public int getFoodId() {
-        return foodId;
+        return Id;
     }
 
-    public void setFoodId(int foodId) {
-        this.foodId = foodId;
+    public void setFoodId(int Id) {
+        this.Id = Id;
     }
 
     public LocalDate getDate() {
