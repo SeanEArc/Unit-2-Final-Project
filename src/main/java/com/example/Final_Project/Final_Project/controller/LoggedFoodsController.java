@@ -33,7 +33,8 @@ public class LoggedFoodsController {
     public ResponseEntity<?> getLoggedFoodById(@PathVariable int id) {
         LoggedFoods currentFoodId = loggedFoodsRepositories.findById(id).orElse(null);
         if (currentFoodId != null) {
-            return new ResponseEntity<>(currentFoodId, HttpStatus.OK);
+            return new ResponseEntity<>
+                    (currentFoodId, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Logged Food not found", HttpStatus.NOT_FOUND);
         }
@@ -63,7 +64,6 @@ public class LoggedFoodsController {
                     return new ResponseEntity<>(newLoggedFood, HttpStatus.CREATED);
                 });
     }
-
 
 
 
