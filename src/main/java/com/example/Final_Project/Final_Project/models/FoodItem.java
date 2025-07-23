@@ -108,4 +108,6 @@ public class FoodItem {
     public void setLoggedFoods(LoggedFoods loggedFoods) {
         this.loggedFoods = loggedFoods;
     }
+
+
 }
