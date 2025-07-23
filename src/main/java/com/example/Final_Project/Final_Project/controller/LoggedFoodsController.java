@@ -22,7 +22,7 @@ public class LoggedFoodsController {
     private final List<LoggedFoods> loggedFoods = new ArrayList<>();
 
     // Get all Logged Foods
-    @GetMapping("")
+    @GetMapping("/all")
     public ResponseEntity<?> getAllLoggedFoods(){
     List<LoggedFoods> allLoggedFoods = loggedFoodsRepositories.findAll();
         return new ResponseEntity<>(allLoggedFoods, HttpStatus.OK);
