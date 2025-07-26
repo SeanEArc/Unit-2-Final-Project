@@ -1,5 +1,6 @@
 package com.example.Final_Project.Final_Project.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 // Comment for commit to seperate branch
 
 @Entity
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue
@@ -16,13 +17,14 @@ public class User {
     private String username;
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<LoggedFoods> loggedFoods;
 
     // ------------------------ Constructors ---------------------------------
-    public User() {}
+    public Users() {}
 
-    public User(int id, String name, String username, String password) {
+    public Users(int id, String name, String username, String password) {
         this.id = id;
         this.name = name;
         this.username = username;

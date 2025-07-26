@@ -44,6 +44,15 @@ public class FoodItem {
         this.calories = calories;
     }
 
+    public FoodItem(String foodName, int calories, int protein, int carbs, int fat, List<String> ingredients) {
+        this.foodName = foodName;
+        this.calories = calories;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fat = fat;
+        this.ingredients = ingredients;
+    }
+
     // ------------------------Getters and Setters -----------------------------------------------
     public int getId() {
         return id;

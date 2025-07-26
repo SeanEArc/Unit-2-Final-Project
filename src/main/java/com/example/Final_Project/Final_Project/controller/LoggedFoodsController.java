@@ -47,6 +47,8 @@ public class LoggedFoodsController {
         return new ResponseEntity<>(saveLoggedFood, HttpStatus.CREATED);
     }
 
+
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updateLoggedFoodItem(@PathVariable int id, @RequestBody LoggedFoods loggedFood) {
         return loggedFoodsRepositories.findById(id)

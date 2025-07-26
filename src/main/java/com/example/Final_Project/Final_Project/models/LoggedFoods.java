@@ -1,4 +1,5 @@
 package com.example.Final_Project.Final_Project.models;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -15,7 +16,8 @@ public class LoggedFoods {
     private LocalDate date;
 
     @ManyToOne
-    private User user;
+    @JsonBackReference
+    private Users user;
 
     @OneToMany(mappedBy = "loggedFoods", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -25,13 +27,13 @@ public class LoggedFoods {
 
     public LoggedFoods() {}
 
-    public LoggedFoods(LocalDate date, User user, List<FoodItem> loggedFoodItems) {
+    public LoggedFoods(LocalDate date, Users user, List<FoodItem> loggedFoodItems) {
         this.date = date;
         this.user = user;
         this.loggedFoodItems = loggedFoodItems;
     }
 
-    public LoggedFoods(LocalDate date, User user) {
+    public LoggedFoods(LocalDate date, Users user) {
         this.date = date;
         this.user = user;
     }
@@ -54,11 +56,11 @@ public class LoggedFoods {
         this.date = date;
     }
 
-    public User getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Users user) {
         this.user = user;
     }
 
