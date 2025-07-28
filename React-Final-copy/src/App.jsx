@@ -6,7 +6,8 @@ import AboutPage from './components/AboutPage';
 import CalorieHistory from './components/CalorieHistory'
 import TopOfPage from './components/TopOfPage'
 import HowItWorks from './components/HowItWorks'
-import LoginPage from './components/LoginPage'
+import LoginPage from './components/auth/LoginPage'
+import Registration from './components/auth/Registration'
 
 const App = () => {
 
@@ -25,6 +26,7 @@ const App = () => {
           
           <Routes>
             <Route path='/login' element={<LoginPage/>}/>
+            <Route path='/register' element={<Registration/>}/>
             <Route path='/' element={<Dashboard />}/>
             <Route path='/calorieHistory'element={<CalorieHistory/>}/>
             <Route path='/howItWorks' element={<HowItWorks/>}/>
