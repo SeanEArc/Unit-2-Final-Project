@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png'
 
+// Comment for commits
 const AboutPage = () => {
 
       const futurePlans = [
