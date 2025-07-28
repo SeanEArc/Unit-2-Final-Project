@@ -6,6 +6,7 @@ import AboutPage from './components/AboutPage';
 import CalorieHistory from './components/CalorieHistory'
 import TopOfPage from './components/TopOfPage'
 import HowItWorks from './components/HowItWorks'
+import LoginPage from './components/LoginPage'
 
 const App = () => {
 
@@ -23,6 +24,7 @@ const App = () => {
         <TopOfPage onSubmitEntry={handleAddEntry}/>
           
           <Routes>
+            <Route path='/login' element={<LoginPage/>}/>
             <Route path='/' element={<Dashboard />}/>
             <Route path='/calorieHistory'element={<CalorieHistory/>}/>
             <Route path='/howItWorks' element={<HowItWorks/>}/>
