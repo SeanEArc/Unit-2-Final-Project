@@ -45,7 +45,7 @@ public class UserController {
     }
 
     // Update User by ID
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateUserByID(@PathVariable int id, @RequestBody Users users) {
         Optional<Users> selectedUserID = userRepositories.findById(id);
         if (selectedUserID.isPresent()) {
@@ -61,7 +61,7 @@ public class UserController {
     }
 
     //Delete User by ID
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteUserByID(@PathVariable int id) {
         if (userRepositories.existsById(id)) {
             userRepositories.deleteById(id);

@@ -48,8 +48,7 @@ public class LoggedFoodsController {
     }
 
 
-
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateLoggedFoodItem(@PathVariable int id, @RequestBody LoggedFoods loggedFood) {
         return loggedFoodsRepositories.findById(id)
                 .map(existingLoggedFood  -> {
