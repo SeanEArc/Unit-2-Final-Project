@@ -1,6 +1,7 @@
 
 import { data, Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import App from '../../App';
 
 // Log In Page Component
 
@@ -10,6 +11,8 @@ const LoginPage = () => {
       const [username, setUsername] = useState('');
       const [password, setPassword] = useState('');
       const [isLoggedIn, setIsLoggedIn] = useState(false);
+      const [error, setError] = useState(null);
+      const [showNavBar, setShowNavBar] = useState(true);
 
       // useNavigate to redirect after login
       const navigate = useNavigate();
@@ -36,15 +39,13 @@ const LoginPage = () => {
                               setUserInfo(data[i]);
                               console.log(`Welcome ${data[i].name}`);
                               console.log(userInfo)
+
                               break;
                         } else {
-                              console.log(`This username or password is incorrect, please try again`);
+                              setError('Invalid username or password');
                         }
                   }
 
-            
-
-                  console.log('Fetched users:', data);
                   console.log(`${data[0]} this is the username ${data[0].username} and this is the password ${data[0].password}`);
 
             } catch (error) {
@@ -57,13 +58,13 @@ const LoginPage = () => {
             if (isLoggedIn) {
                   navigate('/'); 
             }
-
-
       }, [isLoggedIn, navigate]);
 
       return (
             <div className="login-page">
                   <h1>Login Page</h1>
+
+                  {error && <p className="error text-red-300">{error}</p>}
 
                   <form>
                         <div>
@@ -96,7 +97,7 @@ const LoginPage = () => {
                               </label>
                         </div>
                         
-                        <button type="submit" onClick={handleLogin}>Login</button>
+                        <button type="submit" onClick={handleLogin} >Login</button>
                   </form>
 
                   <Link to="/register">Register</Link>

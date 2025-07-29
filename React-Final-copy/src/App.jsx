@@ -8,6 +8,11 @@ import TopOfPage from './components/TopOfPage'
 import HowItWorks from './components/HowItWorks'
 import LoginPage from './components/auth/LoginPage'
 import Registration from './components/auth/Registration'
+import { useState } from 'react';
+
+
+  // WE NEED TO FIND A WAY TO GET NAVBAR TO DISPLAY IF USER IS LOGGED IN
+
 
 const App = () => {
 
@@ -16,13 +21,17 @@ const App = () => {
     setEntries((prev) => [...prev, newEntry]);
   };
 
+  const [showNavBar, setShowNavBar] = useState(false);
+
+
   return (
 
     <div className='App'>
 
       <BrowserRouter>
+    
 
-        <TopOfPage onSubmitEntry={handleAddEntry}/>
+        {showNavBar && <TopOfPage onSubmitEntry={handleAddEntry}/>}
           
           <Routes>
             <Route path='/login' element={<LoginPage/>}/>
