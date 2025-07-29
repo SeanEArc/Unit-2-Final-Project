@@ -51,9 +51,6 @@ const Registration = () => {
         body: JSON.stringify({ name, username, password }),
       });
       }
-
-      
-
             
     } catch (error) {
       setError(error.message);
@@ -62,6 +59,7 @@ const Registration = () => {
 
   return (
     <div>
+      
       <h2>Create an Account</h2>
 
       <form onSubmit={handleSubmit}>
