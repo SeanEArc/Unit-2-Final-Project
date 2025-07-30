@@ -14,6 +14,7 @@ const LoginPage = () => {
       const [error, setError] = useState(null);
       const [showNavBar, setShowNavBar] = useState(true);
 
+      
       // useNavigate to redirect after login
       const navigate = useNavigate();
 
