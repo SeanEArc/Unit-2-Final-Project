@@ -1,7 +1,8 @@
 
-import { data, Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import App from '../../App';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect, createContext, useContext } from 'react';
+import { UserContext } from '../UserContext';
+
 
 // Log In Page Component
 
@@ -10,10 +11,10 @@ const LoginPage = () => {
       const [userInfo, setUserInfo] = useState([]);
       const [username, setUsername] = useState('');
       const [password, setPassword] = useState('');
-      const [isLoggedIn, setIsLoggedIn] = useState(false);
       const [error, setError] = useState(null);
-      const [showNavBar, setShowNavBar] = useState(true);
 
+      // Sets context as user and logged in for gloabl variables. 
+      const { setUser, setIsLoggedIn, isLoggedIn } = useContext(UserContext);
       
       // useNavigate to redirect after login
       const navigate = useNavigate();
@@ -32,12 +33,15 @@ const LoginPage = () => {
 
                   const data = await response.json();
 
-
+                  foundUser = null;
+                  foundUserIndex = null;
                   for (let i = 0; i < data.length; i++) {
                         if (username === data[i].username && password === data[i].password) {
                               console.log(`User ${i} is logged in`);
                               setIsLoggedIn(true);
-                              setUserInfo(data[i]);
+                              setUser(data[i]);
+                              foundUserIndex = i
+                              console.log(foundUserIndex)
                               console.log(`Welcome ${data[i].name}`);
                               console.log(userInfo)
 
@@ -46,8 +50,6 @@ const LoginPage = () => {
                               setError('Invalid username or password');
                         }
                   }
-
-                  console.log(`${data[0]} this is the username ${data[0].username} and this is the password ${data[0].password}`);
 
             } catch (error) {
                   console.error('Error logging in:', error);
@@ -61,13 +63,16 @@ const LoginPage = () => {
             }
       }, [isLoggedIn, navigate]);
 
+
+
       return (
+
             <div className="login-page">
                   <h1>Login Page</h1>
 
                   {error && <p className="error text-red-300">{error}</p>}
 
-                  <form>
+                  <form onSubmit={handleLogin}>
                         <div>
 
                               <label>
@@ -98,7 +103,7 @@ const LoginPage = () => {
                               </label>
                         </div>
                         
-                        <button type="submit" onClick={handleLogin} >Login</button>
+                        <button type="submit">Login</button>
                   </form>
 
                   <Link to="/register">Register</Link>
