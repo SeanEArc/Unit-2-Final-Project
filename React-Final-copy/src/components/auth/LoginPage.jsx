@@ -2,7 +2,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, createContext, useContext } from 'react';
 import { UserContext } from '../UserContext';
-import NotLoggedInNavBar from './NotLoggedInNavBar';
 import { HealthyPlate  } from '../../assets/StockPhotos/stockPhotos'
 
 
@@ -66,62 +65,75 @@ const LoginPage = () => {
 
       return (
 
-            <div className="login-page">
-                  <NotLoggedInNavBar/>
+            <div className="login-page mt-25">
 
-                  <div className='grid grid-cols-[60%_40%] max-w-[90%] items-center justify-center mx-auto border'>
+                  <div className='grid grid-cols-[60%_40%] max-w-[80%] items-center justify-center mx-auto border'>
 
                         <div className='mx-auto'>
                               <img src={HealthyPlate} alt='Healthy Plate'/>
                         </div>
                   
-                        <div className=''>
-                        <h1 class>User Login</h1>
+                        <div className='border md:min-w-[80%] mx-auto'>
+
+                              <h1 className='pb-5'>User Login</h1>
 
 
 
-                        <form onSubmit={handleLogin}>
+                              <form onSubmit={handleLogin}>
 
-                              <div>
+                                    <div className='pt-2 pb-2 mb-1'>
 
-                                    <label className='block'>
-                                          Username:
-                                          
-                                    </label>
+                                          <label className='block text-lg'>
+                                                Username:
+                                                
+                                          </label>
 
-                                    <input type="text"
-                                          value={username}
-                                          placeholder='Required'
-                                          onChange={(event) => setUsername(event.target.value)}
-                                          required
-                                          className='border px-2 py-1'> 
-                                          </input>
+                                          <input type="text"
+                                                value={username}
+                                                placeholder='Required'
+                                                onChange={(event) => setUsername(event.target.value)}
+                                                required
+                                                className='border px-2 py-1'> 
+                                                </input>
 
-                              </div>
+                                    </div>
 
-                              <div>
-                                    <label className='block'>
-                                          
-                                          Password:
-                                          
-                                          
-                                    </label>
-                                    <input type='password'
-                                          value={password}
-                                          placeholder='Required'
-                                          onChange={(event) => setPassword(event.target.value)}
-                                          required
-                                          className='border px-2 py-1'>
-                                          </input>
-                              </div>
-                              
-                        {error && <p className="error text-red-300">{error}</p>}
-                        
-                                                      
-                              <button type="submit">Login</button>
-                        </form>
+                                    <div className='pt-1 pb-1'>
+                                          <label className='block text-lg'>
+                                                
+                                                Password:
+                                                
+                                          </label>
+                                          <input type='password'
+                                                value={password}
+                                                placeholder='Required'
+                                                onChange={(event) => setPassword(event.target.value)}
+                                                required
+                                                className='border px-2 py-1'>
+                                                </input>
+                                    </div>
 
-                        <Link to="/register">Register</Link>
+                                    <div className='font-semibold'>
+                                          {error && <p className="error text-red-500">{error}</p>}
+                                    </div>
+
+                                    <div className='mt-4'>
+                                          <button 
+                                          type="submit"
+                                          className='bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded w-[25%] text-center shadow-lg'>Login</button>
+                                    </div>
+
+                                    <div>
+                                    
+                                    <p className='font-medium'> Don't have an account? </p>
+
+                                    <Link to="/register"
+                                    className='bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded w-[25%] text-center inline-block shadow-lg'> Create an account </Link>
+
+                                    </div>
+                              </form>
+
+
 
 
                         </div>

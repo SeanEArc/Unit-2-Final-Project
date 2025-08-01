@@ -8,16 +8,12 @@ import TopOfPage from './components/TopOfPage'
 import HowItWorks from './components/HowItWorks'
 import LoginPage from './components/auth/LoginPage'
 import Registration from './components/auth/Registration'
-import { useContext, useState } from 'react';
-import { UserContext } from './components/UserContext.jsx';
 
 
   // WE NEED TO FIND A WAY TO GET NAVBAR TO DISPLAY IF USER IS LOGGED IN
 
 
 const App = () => {
-
-  const { isLoggedIn } = useContext(UserContext);
 
   // Handles Quick Log
   const handleAddEntry = (newEntry) => {
@@ -29,7 +25,8 @@ const App = () => {
 
     <div className='App'>
 
-        {isLoggedIn && <TopOfPage onSubmitEntry={handleAddEntry}/>}
+        {<TopOfPage onSubmitEntry={handleAddEntry}/>}
+
           
           <Routes>
             <Route path='/login' element={<LoginPage/>}/>

@@ -7,8 +7,13 @@ import calorieHistoryImage from '../assets/HowItWorksImages/Calorie-History.png'
 import modifyButtonImage from '../assets/HowItWorksImages/Modify-Button-Image.png'
 import editingImage from '../assets/HowItWorksImages/Modify-Food.png'
 import deleteButtonImage from '../assets/HowItWorksImages/Delete-Button-Image.png'
+import { UserContext } from './UserContext';
+import { useContext } from 'react';
 
 const HowItWorks = () => {
+
+      const { isLoggedIn } = useContext(UserContext);
+      
 
       return (
 
@@ -162,10 +167,16 @@ const HowItWorks = () => {
                         Ready to begin your journey? Head over to your dashboard and start tracking today!
                         </p>
 
-                        <Link to="/"
+
+                        {/* If the user is logged in, it sends them to their dashboard. Else, sends them to
+                        the login page. */}
+                        {isLoggedIn ? (<Link to="/"
                         className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
                         Go to Dashboard
-                        </Link>
+                        </Link>) : (<Link to="/login"
+                        className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
+                        Go to Dashboard
+                        </Link>)}
 
                   </div>
 

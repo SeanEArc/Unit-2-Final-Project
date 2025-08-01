@@ -61,6 +61,7 @@ const Dashboard = () => {
 				</div>
 
 				{showModal && <AddFoodModal onClose={() => setShowModal(false)} />}
+					
 
 			</div>
 		</div>
