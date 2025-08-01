@@ -1,12 +1,15 @@
 import './DashboardStyling.css'
 import AddFoodModal from "./AddFoodModal"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Link } from "react-router-dom"
+import { UserContext } from './UserContext'
 
 
 const Dashboard = () => {
 
 	const [showModal, setShowModal] = useState(false)
+	const { user } = useContext(UserContext)
+	
 
 	//Reusable button
 	const buttonStylings = "text-2xl font-bold md:text-2xl h-24 md:h-40 lg:h-40 px-4 md:px-6 w-full flex items-center justify-center bg-blue-400 text-white rounded-2xl shadow-xl hover:bg-blue-500 transition-transform transition-colors duration-300 ease-in-out"
@@ -19,10 +22,9 @@ const Dashboard = () => {
 
 				<div className='flex col-span-2 justify-center items-center'>
 
-					<p className="text-5xl font-bold text-center mt-0 pt-0">
+					{user ? (<p className='text-5xl font-bold text-center mt-0 pt-0'> Welcome back, {user.name} </p>) : (<p className="text-5xl font-bold text-center mt-0 pt-0">
 					Welcome to Calorie Counter!
-					</p>
-					
+					</p>)}
 				</div>
 
 				<div>
@@ -61,7 +63,7 @@ const Dashboard = () => {
 				</div>
 
 				{showModal && <AddFoodModal onClose={() => setShowModal(false)} />}
-					
+
 
 			</div>
 		</div>
