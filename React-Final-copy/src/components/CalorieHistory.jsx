@@ -1,12 +1,17 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext} from "react"
 import { getTrackedFood, subscribeToFoodUpdates, formatNumber, addedItems, deleteFood, updateEntry} from './foodStorage';
 import ConfirmationModal from "./ConfirmationModal";
 import {BalancedMeal, Protein, Carbs, Fats} from '../assets/foodIcons/foodIcons'
 import EditingForm from "./EditingForm";
 import "./CalorieHistoryStyling.css";
+import { UserContext } from "./UserContext";
 
 
 const CalorieHistory = () => {
+
+
+	const { setUser, user } = useContext(UserContext);
+	
 
 	const [trackedFood, setTrackedFood] = useState([]);
 	const [editingIndex, setEditingIndex] = useState(null);

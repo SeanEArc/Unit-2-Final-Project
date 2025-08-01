@@ -27,8 +27,10 @@ const Registration = () => {
 
       const allUserData = await getAllUsers.json();
 
-      if (username.length > 5 && password.length > 5) {
+      if (username.length >= 5 && password.length > 5) {
         setIsValid(true);
+      } else {
+        setError("Username or Password is not valid")
       }
 
       for (let i = 0; i < allUserData.length; i++) {
