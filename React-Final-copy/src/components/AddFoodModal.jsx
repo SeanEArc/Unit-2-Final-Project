@@ -1,19 +1,22 @@
 import { useState, useRef, useContext } from 'react'
 import { addFood } from './foodStorage'
 import { UserContext } from './UserContext';
+import { getFormattedDate } from './AddFoodUtil';
 
 // When onClose is equal to true, AddFoodModal will close
 
 const AddFoodModal = ({ onClose }) => {
 
 	const { user } = useContext(UserContext)
-
+	
 	const [foodName, setFoodName] = useState("");
-	const [calories, setCalories] = useState("")
-	const [protein, setProtein] = useState("")
-	const [carbs, setCarbs] = useState("")
-	const [fat, setFat] = useState("")
-	const [ingredients, setIngredients] = useState("")
+	const [calories, setCalories] = useState("");
+	const [protein, setProtein] = useState("");
+	const [carbs, setCarbs] = useState("");
+	const [fat, setFat] = useState("");
+	const [ingredients, setIngredients] = useState("");
+	const [ date, setDate ] = useState(getFormattedDate);
+
 
 
 	const modalRef = useRef();
@@ -32,7 +35,7 @@ const AddFoodModal = ({ onClose }) => {
 		const cleanedIngredients = [];
 		for (let i = 0; i < convertedIngredients.length; i++){
 			let ingredient = convertedIngredients[i].trim();
-			if (ingredient.length > 1){
+			if (ingredient.length > 1) {
 				cleanedIngredients.push(ingredient)
 			}
 		}
@@ -42,18 +45,11 @@ const AddFoodModal = ({ onClose }) => {
 		
 
 		// We need to modularize this portion:
-		// padStart is a string method.
-		const now = new Date();
-		const year = now.getFullYear();
-		const month = String(now.getMonth() + 1).padStart(2,'0');
-		const day = String(now.getDate()).padStart(2, '0');
-		const formattedDate = `${year}-${month}-${day}` 
-
-		console.log('DATE:', formattedDate)
-
+		
 		const newItemLogged = {
 		foodName: foodName,
 		calories: Number(calories),
+		date: String(date),
 		protein: Number(protein),
 		carbs: Number(carbs),
 		fat: Number(fat),
@@ -77,9 +73,13 @@ const AddFoodModal = ({ onClose }) => {
 
 			// We are here. Next step is to add the new logged food item into the database.
 
+
+
 			for (let i = 0; i < userData.loggedFoods.length; i++){
 				console.log('userData',i,userData.loggedFoods[i])
-				if (userData.loggedFoods[i].date == formattedDate){
+				if (userData.loggedFoods[i].date == newItemLogged.date){
+
+					
 					console.log("WE FOUND A SOLUTION!")
 					console.log(userData.loggedFoods[i])
 					console.log(userData.loggedFoods[i].foodId)
@@ -133,6 +133,7 @@ const AddFoodModal = ({ onClose }) => {
 			<form id='Log Food Item' onSubmit={handleSubmit} className="flex flex-col gap-1">
 
 				<h2 className="text-xl font-semibold text-center"> Log Food </h2>
+			
 
 				<label className="font-bold flex flex-col text-md mb-1"> 
 				Name of food:
@@ -153,6 +154,15 @@ const AddFoodModal = ({ onClose }) => {
 					className="mt-1 p-1 rounded-md border border-zinc-300 "/>
 				</label>
 
+				<label className="font-bold flex flex-col text-md mb-1"> 
+				Select Date
+					<input type="date"
+					value={date}
+					placeholder="Required"
+					onChange={(event) => setDate(event.target.value)}
+					required
+					className="mt-1 p-1 rounded-md border border-zinc-300 "/>
+				</label> 					
 
 				<h2 className="text-center font-bold mt-4 mb-2 "> Macro's </h2>
 
