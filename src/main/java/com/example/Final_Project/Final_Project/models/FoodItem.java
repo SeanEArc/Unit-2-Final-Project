@@ -44,6 +44,12 @@ public class FoodItem {
         this.calories = calories;
     }
 
+    public FoodItem(String foodName, int calories, List<String> ingredients) {
+        this.foodName = foodName;
+        this.calories = calories;
+        this.ingredients = ingredients;
+    }
+
     public FoodItem(String foodName, int calories, int protein, int carbs, int fat, List<String> ingredients) {
         this.foodName = foodName;
         this.calories = calories;
