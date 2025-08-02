@@ -1,10 +1,12 @@
 import { useState, useRef, useContext } from 'react'
 import { addFood } from './foodStorage'
 import { UserContext } from './UserContext';
-import { getFormattedDate } from './AddFoodUtil';
+import { getFormattedDate, convertIngredientStringToArray } from './AddFoodUtil';
+
+//NOTE TO SELF: WE NEED TO MODULARIZE FURTHER SICE THIS IS A LARRGER FILE.
+
 
 // When onClose is equal to true, AddFoodModal will close
-
 const AddFoodModal = ({ onClose }) => {
 
 	const { user } = useContext(UserContext)
@@ -15,7 +17,7 @@ const AddFoodModal = ({ onClose }) => {
 	const [carbs, setCarbs] = useState("");
 	const [fat, setFat] = useState("");
 	const [ingredients, setIngredients] = useState("");
-	const [ date, setDate ] = useState(getFormattedDate);
+	const [ date, setDate ] = useState(getFormattedDate());
 
 
 
@@ -31,21 +33,12 @@ const AddFoodModal = ({ onClose }) => {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		const convertedIngredients = ingredients.split(",");
-		const cleanedIngredients = [];
-		for (let i = 0; i < convertedIngredients.length; i++){
-			let ingredient = convertedIngredients[i].trim();
-			if (ingredient.length > 1) {
-				cleanedIngredients.push(ingredient)
-			}
-		}
+		const cleanedIngredients = convertIngredientStringToArray(ingredients)
 
-		console.log(convertedIngredients)
 		console.log(cleanedIngredients)
 		
 
 		// We need to modularize this portion:
-		
 		const newItemLogged = {
 		foodName: foodName,
 		calories: Number(calories),
@@ -53,12 +46,15 @@ const AddFoodModal = ({ onClose }) => {
 		protein: Number(protein),
 		carbs: Number(carbs),
 		fat: Number(fat),
-		ingredients: Array(cleanedIngredients)
+		ingredients: cleanedIngredients
 		};
+
+		let existingDate = false;
+		let loggedFoodId = null;
 
 		// Fetching data
 		try {
-
+			// Calls user data by id.
 			const responseUser = await fetch(`http://localhost:8080/users/${user.id}`, {
 				method: 'GET',
 				headers: {
@@ -68,39 +64,76 @@ const AddFoodModal = ({ onClose }) => {
 			const userData = await responseUser.json();
 			
 			console.log(userData)
-
 			console.log(userData.loggedFoods)
 
-			// We are here. Next step is to add the new logged food item into the database.
 
 
-
+			//Checks if date under loggedFoods exsist
 			for (let i = 0; i < userData.loggedFoods.length; i++){
 				console.log('userData',i,userData.loggedFoods[i])
-				if (userData.loggedFoods[i].date == newItemLogged.date){
+				if (userData.loggedFoods[i].date == date){
 
-					
+					existingDate = true
+					loggedFoodId = userData.loggedFoods[i].foodId
+					console.log(loggedFoodId)
+
 					console.log("WE FOUND A SOLUTION!")
 					console.log(userData.loggedFoods[i])
 					console.log(userData.loggedFoods[i].foodId)
-
+					
+					break
 				}
 			}
 
+			// Create's new daily log if it does not exsist yet.
+			if (!existingDate){
+				const postResponse = await fetch('http://localhost:8080/logged-foods/add', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					date: date, 
+					user: {id: user.id }, 
+					loggedFoodItems: [] }),
+      		});
+			}
 
-
-
-			const responseLoggedFood = await fetch('http://localhost:8080/logged-foods/all', {
+			if (!loggedFoodId){
+			const responseUser = await fetch(`http://localhost:8080/users/${user.id}`, {
 				method: 'GET',
 				headers: {
 					'Content-Type' : 'application/json',
 				}
 			})
-			const loggedFoodsData = await responseLoggedFood.json();
+			const userData = await responseUser.json();
 
+			for (let i = 0; i < userData.loggedFoods.length; i++){
+				console.log('userData',i,userData.loggedFoods[i])
+				if (userData.loggedFoods[i].date == date){
 
-			console.log(loggedFoodsData)
+					existingDate = true
+					loggedFoodId = userData.loggedFoods[i].foodId
+					console.log(loggedFoodId)
 
+					console.log("WE FOUND A SOLUTION!")
+					console.log(userData.loggedFoods[i])
+					console.log(userData.loggedFoods[i].foodId)
+					
+					break
+				}
+			}			
+			}
+
+			const postFoodItemResponse = await fetch(`http://localhost:8080/food-item/add/${loggedFoodId}`, {
+				method: 'POST',
+				headers: {'Content-Type' : 'application/json'},
+				body: JSON.stringify({
+					foodName : foodName, 
+					calories : calories, 
+					protein : protein, 
+					carbs : carbs, 
+					fat : fat, 
+					ingredients : cleanedIngredients })
+			}) 
 
 		} catch (error) {
 			console.error('Error fetching data:', error)
@@ -199,7 +232,7 @@ const AddFoodModal = ({ onClose }) => {
 				</div>
 
 					<h2 className="text-center font-bold mt-4 mb-2 "> Ingredients </h2>
-					<p className='text-sm'> *Seperate each ingredient by a comma </p>
+					<p className='text-sm'> *Separate each ingredient by a comma </p>
 
 					<label className="font-bold flex flex-col text-md"> 
 						<input type="text"
