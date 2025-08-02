@@ -40,10 +40,16 @@ const AddFoodModal = ({ onClose }) => {
 		console.log(convertedIngredients)
 		console.log(cleanedIngredients)
 		
+
+		// We need to modularize this portion:
+		// padStart is a string method.
 		const now = new Date();
+		const year = now.getFullYear();
+		const month = String(now.getMonth() + 1).padStart(2,'0');
+		const day = String(now.getDate()).padStart(2, '0');
+		const formattedDate = `${year}-${month}-${day}` 
 
-		console.log('DATE:', now)
-
+		console.log('DATE:', formattedDate)
 
 		const newItemLogged = {
 		foodName: foodName,
@@ -54,6 +60,7 @@ const AddFoodModal = ({ onClose }) => {
 		ingredients: Array(cleanedIngredients)
 		};
 
+		// Fetching data
 		try {
 
 			const responseUser = await fetch(`http://localhost:8080/users/${user.id}`, {
@@ -68,10 +75,14 @@ const AddFoodModal = ({ onClose }) => {
 
 			console.log(userData.loggedFoods)
 
+			// We are here. Next step is to add the new logged food item into the database.
+
 			for (let i = 0; i < userData.loggedFoods.length; i++){
 				console.log('userData',i,userData.loggedFoods[i])
-				if (userData.loggedFoods[i].date == now){
+				if (userData.loggedFoods[i].date == formattedDate){
 					console.log("WE FOUND A SOLUTION!")
+					console.log(userData.loggedFoods[i])
+					console.log(userData.loggedFoods[i].foodId)
 
 				}
 			}
