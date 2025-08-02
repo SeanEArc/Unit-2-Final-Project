@@ -1,15 +1,19 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useContext } from 'react'
 import { addFood } from './foodStorage'
+import { UserContext } from './UserContext';
 
 // When onClose is equal to true, AddFoodModal will close
 
 const AddFoodModal = ({ onClose }) => {
+
+	const { user } = useContext(UserContext)
 
 	const [foodName, setFoodName] = useState("");
 	const [calories, setCalories] = useState("")
 	const [protein, setProtein] = useState("")
 	const [carbs, setCarbs] = useState("")
 	const [fat, setFat] = useState("")
+	const [ingredients, setIngredients] = useState("")
 
 
 	const modalRef = useRef();
@@ -21,8 +25,25 @@ const AddFoodModal = ({ onClose }) => {
 	}
 
 	// Handle's submit
-	const handleSubmit = (event) => {
-		event.preventDefault(); 
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+
+		const convertedIngredients = ingredients.split(",");
+		const cleanedIngredients = [];
+		for (let i = 0; i < convertedIngredients.length; i++){
+			let ingredient = convertedIngredients[i].trim();
+			if (ingredient.length > 1){
+				cleanedIngredients.push(ingredient)
+			}
+		}
+
+		console.log(convertedIngredients)
+		console.log(cleanedIngredients)
+		
+		const now = new Date();
+
+		console.log('DATE:', now)
+
 
 		const newItemLogged = {
 		foodName: foodName,
@@ -30,8 +51,52 @@ const AddFoodModal = ({ onClose }) => {
 		protein: Number(protein),
 		carbs: Number(carbs),
 		fat: Number(fat),
+		ingredients: Array(cleanedIngredients)
 		};
 
+		try {
+
+			const responseUser = await fetch(`http://localhost:8080/users/${user.id}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type' : 'application/json',
+				}
+			})
+			const userData = await responseUser.json();
+			
+			console.log(userData)
+
+			console.log(userData.loggedFoods)
+
+			for (let i = 0; i < userData.loggedFoods.length; i++){
+				console.log('userData',i,userData.loggedFoods[i])
+				if (userData.loggedFoods[i].date == now){
+					console.log("WE FOUND A SOLUTION!")
+
+				}
+			}
+
+
+
+
+			const responseLoggedFood = await fetch('http://localhost:8080/logged-foods/all', {
+				method: 'GET',
+				headers: {
+					'Content-Type' : 'application/json',
+				}
+			})
+			const loggedFoodsData = await responseLoggedFood.json();
+
+
+			console.log(loggedFoodsData)
+
+
+		} catch (error) {
+			console.error('Error fetching data:', error)
+		}
+
+
+		
 		addFood(newItemLogged);
 		
 		// Clear's form after submit
@@ -40,6 +105,8 @@ const AddFoodModal = ({ onClose }) => {
 		setProtein("");
 		setCarbs("");
 		setFat("");
+		setIngredients("");
+
 		
 		onClose();
 	};
@@ -55,8 +122,6 @@ const AddFoodModal = ({ onClose }) => {
 			<form id='Log Food Item' onSubmit={handleSubmit} className="flex flex-col gap-1">
 
 				<h2 className="text-xl font-semibold text-center"> Log Food </h2>
-
-				
 
 				<label className="font-bold flex flex-col text-md mb-1"> 
 				Name of food:
@@ -76,6 +141,7 @@ const AddFoodModal = ({ onClose }) => {
 					required
 					className="mt-1 p-1 rounded-md border border-zinc-300 "/>
 				</label>
+
 
 				<h2 className="text-center font-bold mt-4 mb-2 "> Macro's </h2>
 
@@ -111,6 +177,17 @@ const AddFoodModal = ({ onClose }) => {
 
 				</div>
 
+					<h2 className="text-center font-bold mt-4 mb-2 "> Ingredients </h2>
+					<p className='text-sm'> *Seperate each ingredient by a comma </p>
+
+					<label className="font-bold flex flex-col text-md"> 
+						<input type="text"
+						value={ingredients} 
+						placeholder="Optional"
+						onChange={(event) => setIngredients(event.target.value)}
+						className="mt-1 p-1 rounded-md border border-zinc-300 "/>
+					</label>
+					
 					<hr className="mb-1 border-t border-zinc-300 opacity-50" />
 
 					<input type="submit" value="Submit" className="mt-2 px-4 py-2 bg-blue-500 text-white shadow-md rounded hover:cursor-pointer hover:bg-blue-600 hover:scale-101"/>

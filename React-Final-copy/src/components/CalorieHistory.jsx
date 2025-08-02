@@ -96,6 +96,7 @@ const CalorieHistory = () => {
 					
 					{trackedFood.length > 0 ? (
 					<div className="">
+
 							<h2 className="text-center">Logged Foods:</h2>
 							{trackedFood.map((food, index) => (
 								<div key={index} className="food-entry border p-3 m-2 rounded col-span-1">
