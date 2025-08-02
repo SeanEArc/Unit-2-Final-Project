@@ -26,6 +26,23 @@ const CalorieHistory = () => {
 	const totalFat = addedItems(trackedFood, 'fat')
 
 
+	// We are workig on this portion currently. --------------------------------
+	const displayDataBaseItems = (event) => {
+		console.log("NEW RENDER")
+		for (let i = 0; i < user.loggedFoods.length; i++) {
+			const dayLog = user.loggedFoods[i]; 
+			const foodItems = dayLog.loggedFoodItems // user.loggedFoods.loggedFoodItems
+
+			console.log("Date:", dayLog.date); 
+
+			for (let j = 0; j < foodItems.length; j++) {
+				console.log(foodItems[j]);
+				console.log(foodItems[j].foodName)
+			}
+		}
+	};
+
+
 	// Updates trackedFood whenever addFood is used in Modal.jsx.
 	useEffect(() => {
 		setTrackedFood(getTrackedFood());
@@ -33,6 +50,11 @@ const CalorieHistory = () => {
 		const unsubscribe = subscribeToFoodUpdates((updatedFood) => {
 			setTrackedFood(updatedFood);
 		});
+		
+		console.log('All user arrays',user.loggedFoods)
+
+		displayDataBaseItems()
+
 		
 		//Stops tracking of the item added to the array. 
 		return unsubscribe;
@@ -67,6 +89,8 @@ const CalorieHistory = () => {
 	setEditingIndex(null);
 	};
 
+	
+
 	// Get's an image dependant on the foods Macros. If 2 food items are equal or all are zero, then the balanced meal image will display.
 	const getFoodImage = (food) => {
 		const { protein, carbs, fat } = food;
@@ -86,6 +110,7 @@ const CalorieHistory = () => {
 
 		return BalancedMeal;
 	};
+
 
 	return(
 		<div className="">
