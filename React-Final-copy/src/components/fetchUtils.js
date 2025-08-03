@@ -51,7 +51,8 @@ export async function getUserByID(userId) {
 
 
 // Create Logged-Food Item
-export async function createNewFoodId(date, user) {
+export async function createNewDailyId(date, user) {
+
     const postResponse = await fetch('http://localhost:8080/logged-foods/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -61,5 +62,21 @@ export async function createNewFoodId(date, user) {
             loggedFoodItems: [] }),
     });
 
+    const data = await postResponse.json();
+    return data;
 }
 
+// Post Food-Item
+export async function createNewFoodId(loggedFoodId, ){
+    const postFoodItemResponse = await fetch(`http://localhost:8080/food-item/add/${loggedFoodId}`, {
+    method: 'POST',
+    headers: {'Content-Type' : 'application/json'},
+    body: JSON.stringify({
+        foodName : foodName, 
+        calories : calories, 
+        protein : protein, 
+        carbs : carbs, 
+        fat : fat, 
+        ingredients : cleanedIngredients })
+})
+}

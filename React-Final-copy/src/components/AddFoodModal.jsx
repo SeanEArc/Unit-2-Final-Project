@@ -59,33 +59,21 @@ const AddFoodModal = ({ onClose }) => {
 
 			// Calls user data by id.
 			const getUser = await getUserByID(user.id)
-			
-			console.log(getUser)
-			console.log(getUser.loggedFoods)
-
-
 
 			//Checks if date under loggedFoods exsist
 			for (let i = 0; i < getUser.loggedFoods.length; i++){
-				console.log('getUser',i,getUser.loggedFoods[i])
+
 				if (getUser.loggedFoods[i].date == date){
 
 					existingDate = true
-					loggedFoodId = getUser.loggedFoods[i].foodId
-					console.log(loggedFoodId)
-
-					console.log("WE FOUND A SOLUTION!")
-					console.log(getUser.loggedFoods[i])
-					console.log(getUser.loggedFoods[i].foodId)
-					
+					loggedFoodId = getUser.loggedFoods[i].foodId					
 					break
 				}
 			}
 
 			// Create's new daily log if it does not exsist yet.
 			if (!existingDate){
-				console.log("New Daily added")
-				const newLoggedDate = createNewFoodId(date, user.id)
+				const newLoggedDate = createNewDailyId(date, user.id)
 			}
 
 			if (!loggedFoodId){
@@ -99,16 +87,13 @@ const AddFoodModal = ({ onClose }) => {
 				if (getUser.loggedFoods[i].date == date){
 					existingDate = true
 					loggedFoodId = getUser.loggedFoods[i].foodId
-					console.log(loggedFoodId)
-
-					console.log("WE FOUND A SOLUTION!")
-					console.log(getUser.loggedFoods[i])
-					console.log(getUser.loggedFoods[i].foodId)
 					break
+					}
 				}
-			}			
+
 			}
 
+			// Creates new food item.
 			const postFoodItemResponse = await fetch(`http://localhost:8080/food-item/add/${loggedFoodId}`, {
 				method: 'POST',
 				headers: {'Content-Type' : 'application/json'},
@@ -119,14 +104,14 @@ const AddFoodModal = ({ onClose }) => {
 					carbs : carbs, 
 					fat : fat, 
 					ingredients : cleanedIngredients })
-			}) 
+			})
+
 
 		} catch (error) {
 			console.error('Error fetching data:', error)
 		}
 
-
-		
+		// Adds item to array
 		addFood(newItemLogged);
 		
 		// Clear's form after submit
@@ -137,12 +122,12 @@ const AddFoodModal = ({ onClose }) => {
 		setFat("");
 		setIngredients("");
 
-		
+		// Closes Modal
 		onClose();
 	};
 		
 	return (
-		// modalRef is now equal to the AddFoodModal Backdrop
+	// modalRef is now equal to the AddFoodModal Backdrop
 	<div ref={modalRef} 
 	onClick={closeModal}
 	className="flex fixed inset-0 backdrop-blur-sm items-center justify-center z-50">
