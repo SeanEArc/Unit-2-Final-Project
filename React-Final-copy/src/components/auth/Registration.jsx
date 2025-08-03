@@ -34,33 +34,25 @@ const Registration = () => {
       }
 
       for (let i = 0; i < getAllUsers.length; i++) {
-        if (username == getAllUsers[i].username) {
-        console.log(`User ${i} is has the same name as this account ${getAllUsers[i]}`);
-        console.log(getAllUsers[i])
-        
-        console.log(`This username is already taken, please try another one`);
-        
-        setError('This username is already taken, please try another one');
-        setIsValid(false);
-        return;
+        if (username == getAllUsers[i].username) {        
+          setError('This username is already taken, please try another one');
+          setIsValid(false);
+          return;
         }
       }
 
       if (isValid) {
-  
-      const postingUserData = await postUserData('http://localhost:8080/users/add', name, username, password)
-
-      console.log ("User was created.")
-      navigate('/login')
+        const postingUserData = await postUserData('http://localhost:8080/users/add', name, username, password)
+        navigate('/login')
       }
-            
-    } catch (error) {
-      setError(error.message);
-    }
-  };
+
+      } catch (error) {
+        setError(error.message);
+      }
+    };
 
 
-  
+
   return (
     <div>
       

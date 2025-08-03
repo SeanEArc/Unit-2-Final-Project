@@ -2,6 +2,8 @@ import { useState, useRef, useContext } from 'react'
 import { addFood } from './foodStorage'
 import { UserContext } from './UserContext';
 import { getFormattedDate, convertIngredientStringToArray } from './AddFoodUtil';
+import { createNewFoodId, getUserByID } from './fetchUtils';
+
 
 //NOTE TO SELF: WE NEED TO MODULARIZE FURTHER SICE THIS IS A LARRGER FILE.
 
@@ -54,32 +56,27 @@ const AddFoodModal = ({ onClose }) => {
 
 		// Fetching data
 		try {
+
 			// Calls user data by id.
-			const responseUser = await fetch(`http://localhost:8080/users/${user.id}`, {
-				method: 'GET',
-				headers: {
-					'Content-Type' : 'application/json',
-				}
-			})
-			const userData = await responseUser.json();
+			const getUser = await getUserByID(user.id)
 			
-			console.log(userData)
-			console.log(userData.loggedFoods)
+			console.log(getUser)
+			console.log(getUser.loggedFoods)
 
 
 
 			//Checks if date under loggedFoods exsist
-			for (let i = 0; i < userData.loggedFoods.length; i++){
-				console.log('userData',i,userData.loggedFoods[i])
-				if (userData.loggedFoods[i].date == date){
+			for (let i = 0; i < getUser.loggedFoods.length; i++){
+				console.log('getUser',i,getUser.loggedFoods[i])
+				if (getUser.loggedFoods[i].date == date){
 
 					existingDate = true
-					loggedFoodId = userData.loggedFoods[i].foodId
+					loggedFoodId = getUser.loggedFoods[i].foodId
 					console.log(loggedFoodId)
 
 					console.log("WE FOUND A SOLUTION!")
-					console.log(userData.loggedFoods[i])
-					console.log(userData.loggedFoods[i].foodId)
+					console.log(getUser.loggedFoods[i])
+					console.log(getUser.loggedFoods[i].foodId)
 					
 					break
 				}
@@ -87,37 +84,26 @@ const AddFoodModal = ({ onClose }) => {
 
 			// Create's new daily log if it does not exsist yet.
 			if (!existingDate){
-				const postResponse = await fetch('http://localhost:8080/logged-foods/add', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					date: date, 
-					user: {id: user.id }, 
-					loggedFoodItems: [] }),
-      		});
+				console.log("New Daily added")
+				const newLoggedDate = createNewFoodId(date, user.id)
 			}
 
 			if (!loggedFoodId){
-			const responseUser = await fetch(`http://localhost:8080/users/${user.id}`, {
-				method: 'GET',
-				headers: {
-					'Content-Type' : 'application/json',
-				}
-			})
-			const userData = await responseUser.json();
 
-			for (let i = 0; i < userData.loggedFoods.length; i++){
-				console.log('userData',i,userData.loggedFoods[i])
-				if (userData.loggedFoods[i].date == date){
+			// Calls user data by id to check again.
+			const getUser = await getUserByID(user.id)
 
+			for (let i = 0; i < getUser.loggedFoods.length; i++){
+				console.log('getUser',i,getUser.loggedFoods[i])
+
+				if (getUser.loggedFoods[i].date == date){
 					existingDate = true
-					loggedFoodId = userData.loggedFoods[i].foodId
+					loggedFoodId = getUser.loggedFoods[i].foodId
 					console.log(loggedFoodId)
 
 					console.log("WE FOUND A SOLUTION!")
-					console.log(userData.loggedFoods[i])
-					console.log(userData.loggedFoods[i].foodId)
-					
+					console.log(getUser.loggedFoods[i])
+					console.log(getUser.loggedFoods[i].foodId)
 					break
 				}
 			}			
