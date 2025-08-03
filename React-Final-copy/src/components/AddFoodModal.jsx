@@ -2,7 +2,7 @@ import { useState, useRef, useContext } from 'react'
 import { addFood } from './foodStorage'
 import { UserContext } from './UserContext';
 import { getFormattedDate, convertIngredientStringToArray } from './AddFoodUtil';
-import { createNewFoodId, getUserByID } from './fetchUtils';
+import { createNewDailyId, getUserByID } from './fetchUtils';
 
 
 //NOTE TO SELF: WE NEED TO MODULARIZE FURTHER SICE THIS IS A LARRGER FILE.
@@ -37,9 +37,6 @@ const AddFoodModal = ({ onClose }) => {
 
 		const cleanedIngredients = convertIngredientStringToArray(ingredients)
 
-		console.log(cleanedIngredients)
-		
-
 		// We need to modularize this portion:
 		const newItemLogged = {
 		foodName: foodName,
@@ -66,34 +63,36 @@ const AddFoodModal = ({ onClose }) => {
 				if (getUser.loggedFoods[i].date == date){
 
 					existingDate = true
-					loggedFoodId = getUser.loggedFoods[i].foodId					
+					loggedFoodId = getUser.loggedFoods[i].foodId
+					console.log("Date Check", loggedFoodId)				
 					break
 				}
 			}
 
 			// Create's new daily log if it does not exsist yet.
 			if (!existingDate){
-				const newLoggedDate = createNewDailyId(date, user.id)
+				const newLoggedDate = await createNewDailyId(date, user.id)
 			}
 
 			if (!loggedFoodId){
 
 			// Calls user data by id to check again.
-			const getUser = await getUserByID(user.id)
+				const getUser = await getUserByID(user.id)
+				console.log("2nd check",getUser)
 
-			for (let i = 0; i < getUser.loggedFoods.length; i++){
-				console.log('getUser',i,getUser.loggedFoods[i])
+				for (let i = 0; i < getUser.loggedFoods.length; i++){
 
-				if (getUser.loggedFoods[i].date == date){
-					existingDate = true
-					loggedFoodId = getUser.loggedFoods[i].foodId
-					break
+					if (getUser.loggedFoods[i].date == date){
+						existingDate = true
+						loggedFoodId = getUser.loggedFoods[i].foodId
+						break
+						}
 					}
-				}
 
 			}
 
 			// Creates new food item.
+			console.log("Pre-Item Post")
 			const postFoodItemResponse = await fetch(`http://localhost:8080/food-item/add/${loggedFoodId}`, {
 				method: 'POST',
 				headers: {'Content-Type' : 'application/json'},
@@ -105,6 +104,8 @@ const AddFoodModal = ({ onClose }) => {
 					fat : fat, 
 					ingredients : cleanedIngredients })
 			})
+
+			console.log("Item Posted")
 
 
 		} catch (error) {

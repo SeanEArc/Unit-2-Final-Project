@@ -5,6 +5,7 @@ import {BalancedMeal, Protein, Carbs, Fats} from '../assets/foodIcons/foodIcons'
 import EditingForm from "./EditingForm";
 import "./CalorieHistoryStyling.css";
 import { UserContext } from "./UserContext";
+import { getUserByID } from "./fetchUtils";
 
 
 const CalorieHistory = () => {
@@ -19,6 +20,8 @@ const CalorieHistory = () => {
 	const [showConfirmationModel, setShowConfirmationModel] = useState(false)
 	const [deleteIndex, setDeleteIndex] = useState(null);
 
+	const [ historicalLogs, setHistoricalLogs ] = useState([])
+
 
 	const totalCalories = addedItems(trackedFood, 'calories')
 	const totalProtein = addedItems(trackedFood, 'protein')
@@ -27,22 +30,45 @@ const CalorieHistory = () => {
 
 
 	// We are workig on this portion currently. --------------------------------
-	const displayDataBaseItems = (event) => {
-		console.log("NEW RENDER")
-		for (let i = 0; i < user.loggedFoods.length; i++) {
-			const dayLog = user.loggedFoods[i]; 
-			const foodItems = dayLog.loggedFoodItems // user.loggedFoods.loggedFoodItems
 
-			console.log("Date:", dayLog.date); 
 
-			for (let j = 0; j < foodItems.length; j++) {
-				console.log(foodItems[j]);
-				console.log(foodItems[j].foodName)
+	const displayAllUserFoodItems = async (event) => {
+		console.log("displayAllUserFoodItems");
+		
+		const allUserData = await getUserByID(user.id)
+		const logsByDate = [];
+
+
+		for (let i = 0; i < allUserData.loggedFoods.length; i++) {
+			console.log("User Data ", i, allUserData.loggedFoods[i].loggedFoodItems);
+
+			const dayLog = allUserData.loggedFoods[i];
+			const day = dayLog.date;
+			const foodItems = dayLog.loggedFoodItems;
+
+			if (foodItems.length === 0) continue;
+			
+			const foodsForDate = [];
+
+			for (let j = 0; j < foodItems.length; j++ ){
+
+				const item = foodItems[j];
+				foodsForDate.push(item)
+
+				console.log("NEW ITEMS")
 			}
+			
+			logsByDate.push({
+				date: day,
+				items: foodsForDate
+			})
 		}
 
+		console.log("logsByDate", logsByDate)
+		setHistoricalLogs(logsByDate);
 		
-	};
+	}
+
 
 
 	// Updates trackedFood whenever addFood is used in Modal.jsx.
@@ -53,9 +79,8 @@ const CalorieHistory = () => {
 			setTrackedFood(updatedFood);
 		});
 		
-		console.log('All user arrays',user.loggedFoods)
 
-		displayDataBaseItems()
+		displayAllUserFoodItems()
 
 		
 		//Stops tracking of the item added to the array. 
@@ -199,6 +224,15 @@ const CalorieHistory = () => {
 						<h2 className="flex flex-auto text-center font-bold"> - Nothing has been logged yet - </h2>
 					</div>
 					)}
+
+			
+
+
+
+
+
+
+					{/* Sample code here*/}
 
 					<div className="flex flex-auto ml-4 col-2">
 

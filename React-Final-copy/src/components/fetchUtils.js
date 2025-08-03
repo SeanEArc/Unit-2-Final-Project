@@ -67,16 +67,3 @@ export async function createNewDailyId(date, user) {
 }
 
 // Post Food-Item
-export async function createNewFoodId(loggedFoodId, ){
-    const postFoodItemResponse = await fetch(`http://localhost:8080/food-item/add/${loggedFoodId}`, {
-    method: 'POST',
-    headers: {'Content-Type' : 'application/json'},
-    body: JSON.stringify({
-        foodName : foodName, 
-        calories : calories, 
-        protein : protein, 
-        carbs : carbs, 
-        fat : fat, 
-        ingredients : cleanedIngredients })
-})
-}
