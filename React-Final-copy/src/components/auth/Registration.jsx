@@ -1,5 +1,7 @@
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { postUserData, fetchGetData } from '../fetchUtils';
 
 const Registration = () => {
   const [username, setUsername] = useState('');
@@ -8,7 +10,10 @@ const Registration = () => {
   const [error, setError] = useState('');
   const [name, setName] = useState('');
   const [isValid, setIsValid] = useState(false);
-  const [passwordMatch, setPasswordMatch] = useState(false);
+
+
+  const navigate = useNavigate();
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -20,12 +25,7 @@ const Registration = () => {
     
     try {
 
-      const getAllUsers = await fetch('http://localhost:8080/users/all', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-      const allUserData = await getAllUsers.json();
+      const getAllUsers = await fetchGetData('http://localhost:8080/users/all');
 
       if (username.length >= 5 && password.length > 5) {
         setIsValid(true);
@@ -33,10 +33,10 @@ const Registration = () => {
         setError("Username or Password is not valid")
       }
 
-      for (let i = 0; i < allUserData.length; i++) {
-        if (username == allUserData[i].username) {
-        console.log(`User ${i} is has the same name as this account ${allUserData[i]}`);
-        console.log(allUserData[i])
+      for (let i = 0; i < getAllUsers.length; i++) {
+        if (username == getAllUsers[i].username) {
+        console.log(`User ${i} is has the same name as this account ${getAllUsers[i]}`);
+        console.log(getAllUsers[i])
         
         console.log(`This username is already taken, please try another one`);
         
@@ -47,11 +47,11 @@ const Registration = () => {
       }
 
       if (isValid) {
-        const response = await fetch('http://localhost:8080/users/add', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, username, password }),
-      });
+  
+      const postingUserData = await postUserData('http://localhost:8080/users/add', name, username, password)
+
+      console.log ("User was created.")
+      navigate('/login')
       }
             
     } catch (error) {
@@ -59,6 +59,8 @@ const Registration = () => {
     }
   };
 
+
+  
   return (
     <div>
       

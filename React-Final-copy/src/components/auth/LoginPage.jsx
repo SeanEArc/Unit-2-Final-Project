@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, createContext, useContext } from 'react';
 import { UserContext } from '../UserContext';
 import { HealthyPlate  } from '../../assets/StockPhotos/stockPhotos'
-
+import { fetchGetData } from '../fetchUtils';
 
 // Log In Page Component
 
@@ -25,23 +25,15 @@ const LoginPage = () => {
 
             try {
 
-                  const response = await fetch('http://localhost:8080/users/all', {
-                        method: 'GET',
-                        headers: {
-                        'Content-Type': 'application/json',
-                        },
-                  });
+                  const getAllUsers = await fetchGetData('http://localhost:8080/users/all');
 
-                  const data = await response.json();
-
-                  for (let i = 0; i < data.length; i++) {
-                        if (username === data[i].username && password === data[i].password) {
+                  for (let i = 0; i < getAllUsers.length; i++) {
+                        if (username === getAllUsers[i].username && password === getAllUsers[i].password) {
                               console.log(`User ${i} is logged in`);
                               setIsLoggedIn(true);
-                              setUser(data[i]);
+                              setUser(getAllUsers[i]);
                               console.log(i)
-                              console.log(foundUserIndex)
-                              console.log(`Welcome ${data[i].name}`);
+                              console.log(`Welcome ${getAllUsers[i].name}`);
                               console.log(userInfo)
                               break;
                         } else {

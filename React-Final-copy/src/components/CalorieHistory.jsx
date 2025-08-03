@@ -40,6 +40,8 @@ const CalorieHistory = () => {
 				console.log(foodItems[j].foodName)
 			}
 		}
+
+		
 	};
 
 

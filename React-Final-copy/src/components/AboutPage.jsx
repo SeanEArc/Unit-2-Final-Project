@@ -6,9 +6,9 @@ const AboutPage = () => {
 
       const futurePlans = [
             "A Search Bar (to track commonly found food's faster!)",
-            "Visual Enhancements",
-            "Date Tracking",  
-            "Tracking", 
+            "Visual Enhancements", 
+            "Date Tracking",
+            "Tracking",
             "Dark Mode",
             "Image Upload"
       ];
@@ -19,7 +19,7 @@ const AboutPage = () => {
       return (
 
             <div className="max-w-6xl mx-auto p-6 text-center">
-
+s
                   <hr className='mx-10 my-5 bg-gray-300 border-0.5'/>
 
                   <div className='my-5'>
