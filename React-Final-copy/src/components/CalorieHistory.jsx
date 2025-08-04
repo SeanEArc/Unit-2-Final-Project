@@ -32,7 +32,7 @@ const CalorieHistory = () => {
 	// We are workig on this portion currently. --------------------------------
 
 
-	const displayAllUserFoodItems = async (event) => {
+	const displayAllUserFoodItems = async () => {
 		console.log("displayAllUserFoodItems");
 		
 		const allUserData = await getUserByID(user.id)
@@ -55,17 +55,23 @@ const CalorieHistory = () => {
 				const item = foodItems[j];
 				foodsForDate.push(item)
 
+
 				console.log("NEW ITEMS")
 			}
 			
 			logsByDate.push({
+
 				date: day,
 				items: foodsForDate
 			})
+
+			
 		}
 
 		console.log("logsByDate", logsByDate)
 		setHistoricalLogs(logsByDate);
+
+		console.log(trackedFood)
 		
 	}
 
@@ -145,85 +151,107 @@ const CalorieHistory = () => {
 			<div className="history-container flex w-full max-w-[90%] justify-center items-center mx-auto mb-10">
 
 				<div className="flex-auto grid md:grid-cols-[60%_40%] mt-10">
+
 					
-					{trackedFood.length > 0 ? (
+					{historicalLogs.length > 0 ? (
 					<div className="">
+						<h2 className="text-center">Logged Foods:</h2>
+						
+						{historicalLogs.map((log, logIndex) => (
+							<div key={logIndex}>
+								<h3 className="font-bold text-lg text-center my-4">{log.date}</h3>
 
-							<h2 className="text-center">Logged Foods:</h2>
-							{trackedFood.map((food, index) => (
-								<div key={index} className="food-entry border p-3 m-2 rounded col-span-1">
+								{log.items.map((food, index) => (
+									<div key={index} className="food-entry border p-3 m-2 rounded col-span-1">
+
+										<div className="grid grid-cols-[20%_50%_30%]">
 										
-									<div className="grid grid-cols-[20%_50%_30%]">
-
 										<div className="flex items-center justify-center">
-
-											<img src={getFoodImage(food)}
+											<img
+											src={getFoodImage(food)}
 											alt="Macro-Type"
-											className="h-25 aspect-square mx-auto"/>
-
-										</div>                                               
+											className="h-25 aspect-square mx-auto"
+											/>
+										</div>
 										
 										<div className="grid grid-cols-2 flex-auto p-2">
 
-											<div className="ml-5">
-													
-												<h2 className="">{food.foodName}</h2>
+											<div className="ml-5">			
+												<h2>{food.foodName}</h2>
 												<p>Calories: {food.calories}</p>
-
 											</div>
 
 											<div>
-
-												<h2> Macros:</h2>
-												{food.protein > 0 && <p> Protein: {food.protein}g</p>}
-												{food.carbs > 0 && <p> Carbs: {food.carbs}g</p>}
-												{food.fat > 0 && <p> Fats: {food.fat}g</p>}
-												{food.protein < 1 && food.fat < 1 && food.carbs < 1 && (<p> Empty </p>)}
-
+												<h2>Macros:</h2>
+												{food.protein > 0 && <p>Protein: {food.protein}g</p>}
+												{food.carbs > 0 && <p>Carbs: {food.carbs}g</p>}
+												{food.fat > 0 && <p>Fats: {food.fat}g</p>}
+												{food.protein < 1 && food.fat < 1 && food.carbs < 1 && <p>Empty</p>}
 											</div>
 
+											
+
+											<div className="grid grid-cols-2">
+												<p className="col-span-2 font-semibold"> Ingredients </p>
+
+												{food.ingredients.length > 0 ? (
+
+												<ul  className="">										
+													{ food.ingredients.map( ( ingredient, index ) => (
+														<li key={index}> {ingredient} </li>
+
+												))}
+
+												</ul>
+
+											) : (
+												<p> No Foods Logged</p>
+											)}
 										</div>
 
+									</div>
 
-											<div className="food-buttons flex flex-col justify-center items-center gap-2">
+									<div className="food-buttons flex flex-col justify-center items-center gap-2">
+										<button
+										onClick={() => handleModify(index)}
+										className="w-full h-[40%] py-2 px-4 bg-gray-500 rounded text-lg font-semibold hover:bg-gray-400 hover:bg-gradient-to-b"
+										>
+										Modify
+										</button>
 
-												<button
+										<button
+										onClick={() => {
+											setDeleteIndex(index);
+											setShowConfirmationModel(true);
+										}}
+										className="w-full h-[40%] py-2 px-4 text-lg rounded font-semibold bg-red-500 hover:bg-red-400"
+										>
+										Delete
+										</button>
 
-													onClick={() =>handleModify(index)}
-
-													className="w-full h-[40%] py-2 px-4 bg-gray-500 rounded text-lg font-semibold hover:bg-gray-400 hover:bg-gradient-to-b"> 
-												
-													Modify 
-												</button>
-
-												
-												<button 
-													onClick={() => {setDeleteIndex(index);
-													setShowConfirmationModel(true);}}
-
-													className="w-full h-[40%] py-2 px-4 text-lg rounded font-semibold bg-red-500 hover:bg-red-400">
-													Delete
-												</button>
-
-													{showConfirmationModel && (
-													<ConfirmationModal
-													onClose={() => {
-													setShowConfirmationModel(false);
-													setDeleteIndex(null);}}
-													onConfirm={handleConfirmDelete}/>)}
-
-											</div>
+										{showConfirmationModel && (
+										<ConfirmationModal
+											onClose={() => {
+											setShowConfirmationModel(false);
+											setDeleteIndex(null);
+											}}
+											onConfirm={handleConfirmDelete}
+										/>
+										)}
+									</div>
 
 									</div>
-								
 								</div>
+								))}
+							</div>
 							))}
-					</div>
-					) : (
-					<div> 
-						<h2 className="flex flex-auto text-center font-bold"> - Nothing has been logged yet - </h2>
-					</div>
-					)}
+						</div>
+
+						) : (
+						<div>
+							<h2 className="flex flex-auto text-center font-bold">- Nothing has been logged for the day -</h2>
+						</div>
+						)}
 
 			
 
