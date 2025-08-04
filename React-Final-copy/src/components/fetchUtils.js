@@ -129,12 +129,22 @@ export async function deleteDailyLog(id) {
 
 //Edit's userResponse
 
-export async function updateFoodItem(foodid) {
-    
-		const responseGet = await fetch(`http://localhost:8080/logged-foods/${id}`, {
-			method: 'GET',
-			headers: { 'Content-Type': 'application/json' },
-		});    
+export async function updateFoodItem(foodId, updatedData) {
+    const response = await fetch(`http://localhost:8080/food-item/update/${foodId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedData),
+    });
+
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to update: ${errorText}`);
+    }
+
+    return await response.json();
 
 }
 

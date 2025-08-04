@@ -5,7 +5,7 @@ import {BalancedMeal, Protein, Carbs, Fats} from '../assets/foodIcons/foodIcons'
 import EditingForm from "./EditingForm";
 import "./CalorieHistoryStyling.css";
 import { UserContext } from "./UserContext";
-import { deleteDailyLog, deleteFoodItem, getUserByID } from "./fetchUtils";
+import { deleteDailyLog, deleteFoodItem, getUserByID, updateFoodItem } from "./fetchUtils";
 
 
 const CalorieHistory = () => {
@@ -15,8 +15,9 @@ const CalorieHistory = () => {
 	
 
 	const [trackedFood, setTrackedFood] = useState([]);
-	const [editingIndex, setEditingIndex] = useState(null);
+	const [editingFood, setEditingFood] = useState(null);
 	const [editForm, setEditForm] = useState({ foodName: '', calories: '', protein: '', carbs: '', fat: ''});
+
 	const [showConfirmationModel, setShowConfirmationModel] = useState(false)
 	const [deleteIndex, setDeleteIndex] = useState(null);
 
@@ -115,21 +116,37 @@ const CalorieHistory = () => {
 	
 
 	// Set's values of UseState's.
-	const handleModify = (index) => {
-		setEditingIndex(index)
-		setEditForm(trackedFood[index])
+	const handleModify = (foodItem) => {
+		setEditingFood(foodItem);
+		setEditForm({
+			foodName: foodItem.foodName,
+			calories: foodItem.calories,
+			protein: foodItem.protein,
+			carbs: foodItem.carbs,
+			fat: foodItem.fat
+		});
 	}	
 
 	// Send's info to js file to complete updating form, then closes the form.
-	const handleUpdate = () => {
-	updateEntry(editingIndex, {
-		...editForm,
-		calories: Number(editForm.calories),
-		protein: Number(editForm.protein),
-		carbs: Number(editForm.carbs),
-		fat: Number(editForm.fat),
-		});
-	setEditingIndex(null);
+	const handleUpdate = async () => {
+
+		if (!editingFood) return;
+
+		const updatedFood = {
+			...editingFood,
+			foodName: editForm.foodName,
+			calories: Number(editForm.calories),
+			protein: Number(editForm.protein),
+			carbs: Number(editForm.carbs),
+			fat: Number(editForm.fat)
+		}
+
+		await updateFoodItem(editingFood.id, updatedFood);
+		await displayAllUserFoodItems();
+		setEditingFood(null);
+
+
+
 	};
 
 	
@@ -224,7 +241,7 @@ const CalorieHistory = () => {
 
 									<div className="food-buttons flex flex-col justify-center items-center gap-2">
 										<button
-										onClick={() => handleModify(index)}
+										onClick={() => handleModify(food)}
 										className="w-full h-[40%] py-2 px-4 bg-gray-500 rounded text-lg font-semibold hover:bg-gray-400 hover:bg-gradient-to-b"
 										>
 										Modify
@@ -306,12 +323,12 @@ const CalorieHistory = () => {
 
 							</div>
 
-									{editingIndex !== null && (
+									{editingFood !== null && (
 									<EditingForm
 										editForm={editForm}
 										setEditForm={setEditForm}
 										handleUpdate={handleUpdate}
-										cancelEdit={() => setEditingIndex(null)}/>
+										cancelEdit={() => setEditingFood(null)}/>
 									)}
 
 						</div>
