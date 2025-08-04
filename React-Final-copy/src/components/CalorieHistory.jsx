@@ -5,7 +5,7 @@ import {BalancedMeal, Protein, Carbs, Fats} from '../assets/foodIcons/foodIcons'
 import EditingForm from "./EditingForm";
 import "./CalorieHistoryStyling.css";
 import { UserContext } from "./UserContext";
-import { getUserByID } from "./fetchUtils";
+import { deleteDailyLog, deleteFoodItem, getUserByID } from "./fetchUtils";
 
 
 const CalorieHistory = () => {
@@ -45,8 +45,11 @@ const CalorieHistory = () => {
 			const dayLog = allUserData.loggedFoods[i];
 			const day = dayLog.date;
 			const foodItems = dayLog.loggedFoodItems;
+			
 
-			if (foodItems.length === 0) continue;
+			if (foodItems.length === 0) {
+				continue;
+			};
 			
 			const foodsForDate = [];
 
@@ -55,23 +58,20 @@ const CalorieHistory = () => {
 				const item = foodItems[j];
 				foodsForDate.push(item)
 
-
-				console.log("NEW ITEMS")
 			}
 			
 			logsByDate.push({
 
 				date: day,
+				foodId: dayLog.foodId,
 				items: foodsForDate
 			})
 
 			
 		}
 
-		console.log("logsByDate", logsByDate)
 		setHistoricalLogs(logsByDate);
 
-		console.log(trackedFood)
 		
 	}
 
@@ -94,12 +94,22 @@ const CalorieHistory = () => {
 	}, []);
 
 	
-	// Handle's delete entry
-	const handleConfirmDelete = () => {
+	// Handle's delete entry. Deletes Daily Log if empty.
+	const handleConfirmDelete = async () => {
+
 		if (deleteIndex !== null) {
-			deleteFood(deleteIndex);
+
+			const { foodId, itemId } = deleteIndex;
+
+			await deleteFoodItem(itemId)
+
+			await deleteDailyLog(foodId)
+
+			await displayAllUserFoodItems(null)
+
 			setDeleteIndex(null);
 		}
+
 		setShowConfirmationModel(false);
 	};
 	
@@ -162,7 +172,8 @@ const CalorieHistory = () => {
 								<h3 className="font-bold text-lg text-center my-4">{log.date}</h3>
 
 								{log.items.map((food, index) => (
-									<div key={index} className="food-entry border p-3 m-2 rounded col-span-1">
+									<div key={food.id} className="food-entry border p-3 m-2 rounded col-span-1">
+										
 
 										<div className="grid grid-cols-[20%_50%_30%]">
 										
@@ -221,7 +232,7 @@ const CalorieHistory = () => {
 
 										<button
 										onClick={() => {
-											setDeleteIndex(index);
+											setDeleteIndex({ foodId: log.foodId, itemId: food.id });
 											setShowConfirmationModel(true);
 										}}
 										className="w-full h-[40%] py-2 px-4 text-lg rounded font-semibold bg-red-500 hover:bg-red-400"

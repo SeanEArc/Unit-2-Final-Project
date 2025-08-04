@@ -57,8 +57,8 @@ export async function createNewDailyId(date, user) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            date: date, 
-            user: {id: user }, 
+            date: date,
+            user: {id: user },
             loggedFoodItems: [] }),
     });
 
@@ -66,4 +66,77 @@ export async function createNewDailyId(date, user) {
     return data;
 }
 
-// Post Food-Item
+
+
+//Delete foodItem
+export async function deleteFoodItem(id) {
+
+        const response = await fetch(`http://localhost:8080/food-item/${id}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+ 
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Failed to delete: ${errorText}`);
+        }
+
+        return await response.text();
+
+}
+
+
+// Delete's DailyLoggedFood DailyLog is empty.
+export async function deleteDailyLog(id) {
+
+		// Get the loggedFood by ID
+		const responseGet = await fetch(`http://localhost:8080/logged-foods/${id}`, {
+			method: 'GET',
+			headers: { 'Content-Type': 'application/json' },
+		});
+
+		if (!responseGet.ok) {
+			const errorText = await responseGet.text();
+			throw new Error(`Failed to fetch log: ${errorText}`);
+		}
+
+		const userData = await responseGet.json();
+
+		console.log("Fetched LoggedFood:", userData);
+
+		//Only delete's DailyLog if no food items
+		if (userData.loggedFoodItems.length === 0) {
+			const responseDelete = await fetch(`http://localhost:8080/logged-foods/${id}`, {
+				method: 'DELETE',
+				headers: { 'Content-Type': 'application/json' },
+			});
+
+			if (!responseDelete.ok) {
+				const errorText = await responseDelete.text();
+				throw new Error(`Failed to delete: ${errorText}`);
+			}
+
+			const message = await responseDelete.text();
+			console.log("Deleted:", message);
+
+			return message;
+
+		}
+
+}
+
+
+//Edit's userResponse
+
+export async function updateFoodItem(foodid) {
+    
+		const responseGet = await fetch(`http://localhost:8080/logged-foods/${id}`, {
+			method: 'GET',
+			headers: { 'Content-Type': 'application/json' },
+		});    
+
+}
+
+
+
