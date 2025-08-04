@@ -57,7 +57,7 @@ public class FoodItemController {
     }
 
     // Update Food Item by ID
-    @PutMapping("/{id}")
+    @PutMapping("update/{id}")
     public ResponseEntity<?> updateFoodItem(@PathVariable int id, @RequestBody FoodItem foodItem) {
         Optional<FoodItem> selectedFoodItem = foodItemRepositories.findById(id);
         if (selectedFoodItem.isPresent()) {

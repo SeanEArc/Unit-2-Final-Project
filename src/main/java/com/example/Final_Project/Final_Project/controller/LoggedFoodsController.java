@@ -68,5 +68,18 @@ public class LoggedFoodsController {
     }
 
 
+    // Delete Logged Food by ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteLoggedFoodById(@PathVariable int id) {
+        if (loggedFoodsRepositories.existsById(id)) {
+            loggedFoodsRepositories.deleteById(id);
+            return new ResponseEntity<>("Logged Food deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Logged Food not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+
 
 }
