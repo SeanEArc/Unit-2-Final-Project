@@ -48,7 +48,7 @@ const Registration = () => {
 
       if (isValid) {
         const postingUserData = await postUserData('http://localhost:8080/users/add', name, username, password, calorieGoal, proteinGoal)
-        navigate('/login')
+        navigate('/')
       }
 
       } catch (error) {

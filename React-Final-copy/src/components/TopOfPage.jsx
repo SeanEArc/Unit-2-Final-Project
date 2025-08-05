@@ -17,10 +17,10 @@ const TopOfPage = ( ) => {
                   
                   <div className="grid md:grid-cols-11 flex-auto text-center w-full bg-cyan-100 font-bold ">
 
-                        {isLoggedIn ? (<Link to='/' 
+                        {isLoggedIn ? (<Link to='/dashboard' 
                         className="top-title-link flex-auto w-full col-start-4 col-end-9 text-4xl text-center font-bold pt-2 pb-2 bg-cyan-100 "> 
                         Calorie Counter 
-                        </Link>) : (<Link to='/login' 
+                        </Link>) : (<Link to='/' 
                         className="top-title-link flex-auto w-full col-start-4 col-end-9 text-4xl text-center font-bold pt-2 pb-2 bg-cyan-100 "> 
                         Calorie Counter 
                         </Link>)}

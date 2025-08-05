@@ -173,10 +173,10 @@ const HowItWorks = () => {
 
                         {/* If the user is logged in, it sends them to their dashboard. Else, sends them to
                         the login page. */}
-                        {isLoggedIn ? (<Link to="/"
+                        {isLoggedIn ? (<Link to="/dashboard"
                         className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
                         Go to Dashboard
-                        </Link>) : (<Link to="/login"
+                        </Link>) : (<Link to="/"
                         className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
                         Go to Dashboard
                         </Link>)}

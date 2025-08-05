@@ -40,7 +40,7 @@ const LoginPage = () => {
       useEffect(() => {
 
             if (isLoggedIn) {
-                  navigate('/'); 
+                  navigate('/dashboard'); 
             }
       }, [isLoggedIn, navigate]);
 
@@ -56,7 +56,6 @@ const LoginPage = () => {
                               <img src={HealthyPlate} alt='Healthy Plate' className="max-w-full h-auto"/>
                         </div>
 
-                  {/*Form section*/}
                         <div className='p-10 flex flex-col justify-center'>
 
                               <h1 className='text-3xl font-bold text-gray-800 mb-6'>User Login</h1>

@@ -83,7 +83,7 @@ const Dashboard = () => {
 					<button
 						onClick={() => {
 							setIsLoggedIn(false)
-							navigate('/login');
+							navigate('/');
 						}}
 						className={`${buttonStylings} small-log-food-button `} >
 						Log Out

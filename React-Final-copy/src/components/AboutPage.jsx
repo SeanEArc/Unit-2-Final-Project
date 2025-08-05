@@ -3,7 +3,6 @@ import logo from '../assets/logo.png'
 import { useContext } from 'react';
 import { UserContext } from './UserContext';
 
-// Comment for commits
 const AboutPage = () => {
 
       const { isLoggedIn } = useContext(UserContext);
@@ -117,10 +116,10 @@ const AboutPage = () => {
                               Ready to begin your journey? Head over to your dashboard and start tracking today!
                               </p>
 
-                              {isLoggedIn ? (<Link to="/"
+                              {isLoggedIn ? (<Link to="/dashboard"
                               className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
                               Go to Dashboard
-                              </Link>) : (<Link to="/login"
+                              </Link>) : (<Link to="/"
                               className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
                               Go to Dashboard
                               </Link>)}

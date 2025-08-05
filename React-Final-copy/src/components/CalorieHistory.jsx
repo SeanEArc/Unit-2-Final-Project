@@ -200,6 +200,15 @@ const CalorieHistory = () => {
 											<div className="ml-5">			
 												<h2>{food.foodName}</h2>
 												<p>Calories: {food.calories}</p>
+
+												<p className="font-semibold pt-2"> Ingredients </p>
+
+												{food.ingredients.length > 0 ? (
+													<p>{food.ingredients.join(', ')}</p>
+
+											) : (
+												<p> Nothing Logged </p>
+											)}												
 											</div>
 
 											<div>
@@ -209,26 +218,6 @@ const CalorieHistory = () => {
 												{food.fat > 0 && <p>Fats: {food.fat}g</p>}
 												{food.protein < 1 && food.fat < 1 && food.carbs < 1 && <p>Empty</p>}
 											</div>
-
-											
-
-											<div className="grid grid-cols-2">
-												<p className="col-span-2 font-semibold"> Ingredients </p>
-
-												{food.ingredients.length > 0 ? (
-
-												<ul  className="">										
-													{ food.ingredients.map( ( ingredient, index ) => (
-														<li key={index}> {ingredient} </li>
-
-												))}
-
-												</ul>
-
-											) : (
-												<p> No Foods Logged</p>
-											)}
-										</div>
 
 									</div>
 
@@ -274,14 +263,12 @@ const CalorieHistory = () => {
 						</div>
 						)}
 
-					{/* Sample code here*/}
 
 					<div className="flex flex-auto ml-4 col-2">
 
 						<div className="col-start-1 mt-10">
 
 							<div>
-								{/*This must display the totalled calories for today's date */}
 								<h1 className="text-center"> Today's Total Calories: </h1>
 							
 								<h2 className="text-center m-2"> {formatNumber(totalCalories)} kcal </h2>
@@ -289,7 +276,6 @@ const CalorieHistory = () => {
 							</div>
 							
 							<div className="m-2 mt-10">
-								{/*This must display the totalled macros for today's date */}
 							
 								<h1 className="text-center m-2">Today's Total Macro's: </h1>
 
