@@ -147,5 +147,21 @@ export async function updateFoodItem(foodId, updatedData) {
 
 }
 
+export async function updateUser (userId, updatedData) {
+    const response = await fetch(`http://localhost:8080/users/update/${userId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedData),
+    });
 
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to update: ${errorText}`);
+    }
+
+    return await response.json();
+}
 

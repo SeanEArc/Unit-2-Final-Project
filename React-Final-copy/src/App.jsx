@@ -8,7 +8,8 @@ import TopOfPage from './components/TopOfPage'
 import HowItWorks from './components/HowItWorks'
 import LoginPage from './components/auth/LoginPage'
 import Registration from './components/auth/Registration'
-import UserDetails from './components/UserDetails';
+import UserDetails from './components/AccountDetails.jsx';
+import AccountDetails from './components/AccountDetails.jsx';
 
 
   // WE NEED TO FIND A WAY TO GET NAVBAR TO DISPLAY IF USER IS LOGGED IN
@@ -37,7 +38,7 @@ const App = () => {
             <Route path='/calorieHistory'element={<CalorieHistory/>}/>
             <Route path='/howItWorks' element={<HowItWorks/>}/>
             <Route path='/about' element={<AboutPage/>}/>
-            <Route path='/userDetails' element={<UserDetails/>}/>
+            <Route path='/accountDetails' element={<AccountDetails/>}/>
           </Routes>
 
         <Footer/> 

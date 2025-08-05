@@ -9,13 +9,12 @@ import { fetchGetData } from '../fetchUtils';
 
 const LoginPage = () => {
 
-      const [userInfo, setUserInfo] = useState([]);
       const [username, setUsername] = useState('');
       const [password, setPassword] = useState('');
       const [error, setError] = useState(null);
 
       // Sets context as user and logged in for gloabl variables. 
-      const { setUser, setIsLoggedIn, isLoggedIn } = useContext(UserContext);
+      const { setUser, setIsLoggedIn, isLoggedIn, user } = useContext(UserContext);
       
       // useNavigate to redirect after login
       const navigate = useNavigate();
@@ -47,6 +46,7 @@ const LoginPage = () => {
             if (isLoggedIn) {
                   navigate('/'); 
             }
+            console.log(user)
       }, [isLoggedIn, navigate]);
 
 

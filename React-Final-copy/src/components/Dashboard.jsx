@@ -68,7 +68,7 @@ const Dashboard = () => {
 				<div>
 
 				<Link
-				to="/userDetails"
+				to="/accountDetails"
 				className={`${buttonStylings} small-link-styles`}
 				>
 				User Details
