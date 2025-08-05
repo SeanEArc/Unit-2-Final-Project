@@ -3,10 +3,24 @@ Have you ever wanted to have the ability to track your calories without any of t
 all of your previously logged food items on one screen. Most importantly, it's easy to use and there are no ads! You can create multiple user's for each person that uses the application and alway's have information on your own database.
 We are continuing to work on the application to create a full scale fitness app for all of your fitness needs. A fitness app made by a fitness nerd, who want's more from a fitness application.
 
-This application uses the following technology stack:
-Frontend: JavaScript, React JS, Tailwind CSS
-Backend: Java, Spring, Spring Boot Web
-Database: PostgresSQL
+---
+
+## 🛠️ Tech Stack
+
+**Frontend**:  
+- JavaScript  
+- React.js  
+- Tailwind CSS  
+
+**Backend**:  
+- Java  
+- Spring Boot  
+
+**Database**:  
+- PostgreSQL
+
+---
+
 
 
 # How to download the application:
