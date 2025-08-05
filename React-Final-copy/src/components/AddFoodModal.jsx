@@ -1,17 +1,14 @@
 import { useState, useRef, useContext } from 'react'
-import { addFood } from './foodStorage'
 import { UserContext } from './UserContext';
 import { getFormattedDate, convertIngredientStringToArray } from './AddFoodUtil';
 import { createNewDailyId, getUserByID } from './fetchUtils';
 
 
-//NOTE TO SELF: WE NEED TO MODULARIZE FURTHER SICE THIS IS A LARRGER FILE.
-
 
 // When onClose is equal to true, AddFoodModal will close
-const AddFoodModal = ({ onClose }) => {
+const AddFoodModal = ({ onClose, onFoodAdded }) => {
 
-	const { user } = useContext(UserContext)
+	const { user, triggerRefreshKey  } = useContext(UserContext)
 	
 	const [foodName, setFoodName] = useState("");
 	const [calories, setCalories] = useState("");
@@ -64,7 +61,6 @@ const AddFoodModal = ({ onClose }) => {
 
 					existingDate = true
 					loggedFoodId = getUser.loggedFoods[i].foodId
-					console.log("Date Check", loggedFoodId)				
 					break
 				}
 			}
@@ -78,7 +74,6 @@ const AddFoodModal = ({ onClose }) => {
 
 			// Calls user data by id to check again.
 				const getUser = await getUserByID(user.id)
-				console.log("2nd check",getUser)
 
 				for (let i = 0; i < getUser.loggedFoods.length; i++){
 
@@ -102,8 +97,13 @@ const AddFoodModal = ({ onClose }) => {
 					protein : protein, 
 					carbs : carbs, 
 					fat : fat, 
-					ingredients : cleanedIngredients })
-			})
+					ingredients : cleanedIngredients 
+				})
+			});
+
+			if (postFoodItemResponse.ok) {
+				triggerRefreshKey();
+			}
 
 			console.log("Item Posted")
 
@@ -112,8 +112,7 @@ const AddFoodModal = ({ onClose }) => {
 			console.error('Error fetching data:', error)
 		}
 
-		// Adds item to array
-		addFood(newItemLogged);
+
 		
 		// Clear's form after submit
 		setFoodName("");
@@ -122,6 +121,9 @@ const AddFoodModal = ({ onClose }) => {
 		setCarbs("");
 		setFat("");
 		setIngredients("");
+
+		// Tell's the useEffect that displayAllUsers needs to be updated
+		onFoodAdded?.();
 
 		// Closes Modal
 		onClose();

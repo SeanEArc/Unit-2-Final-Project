@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext} from "react"
-import { getTrackedFood, subscribeToFoodUpdates, formatNumber, addedItems, deleteFood, updateEntry} from './foodStorage';
+import { formatNumber, addedItems, getTodayDateString} from './foodStorage';
 import ConfirmationModal from "./ConfirmationModal";
 import {BalancedMeal, Protein, Carbs, Fats} from '../assets/foodIcons/foodIcons'
 import EditingForm from "./EditingForm";
@@ -11,26 +11,25 @@ import { deleteDailyLog, deleteFoodItem, getUserByID, updateFoodItem } from "./f
 const CalorieHistory = () => {
 
 
-	const { setUser, user } = useContext(UserContext);
+	const { user, refreshKey } = useContext(UserContext);
 	
 
-	const [trackedFood, setTrackedFood] = useState([]);
 	const [editingFood, setEditingFood] = useState(null);
 	const [editForm, setEditForm] = useState({ foodName: '', calories: '', protein: '', carbs: '', fat: '', ingredients: []});
 
 	const [showConfirmationModel, setShowConfirmationModel] = useState(false)
 	const [deleteIndex, setDeleteIndex] = useState(null);
 
-	const [ historicalLogs, setHistoricalLogs ] = useState([])
+	const [ historicalLogs, setHistoricalLogs ] = useState([]);
 
 
+
+	const [trackedFood, setTrackedFood] = useState([]);
 	const totalCalories = addedItems(trackedFood, 'calories')
 	const totalProtein = addedItems(trackedFood, 'protein')
 	const totalCarbs = addedItems(trackedFood, 'carbs')
-	const totalFat = addedItems(trackedFood, 'fat')
+	const totalFat = addedItems(trackedFood, 'fat')	
 
-
-	// We are workig on this portion currently. --------------------------------
 
 
 	const displayAllUserFoodItems = async () => {
@@ -72,27 +71,20 @@ const CalorieHistory = () => {
 		}
 
 		setHistoricalLogs(logsByDate);
-
-		
+		const today = getTodayDateString();
+		const todayLog = logsByDate.find(log => log.date === today);
+		const todaysFoodItems = todayLog ? todayLog.items : [];
+		setTrackedFood(todaysFoodItems);
 	}
 
 
 
-	// Updates trackedFood whenever addFood is used in Modal.jsx.
+	// Updates the item's displayed whenever the refreshKey is used.
 	useEffect(() => {
-		setTrackedFood(getTrackedFood());
-	
-		const unsubscribe = subscribeToFoodUpdates((updatedFood) => {
-			setTrackedFood(updatedFood);
-		});
-		
 
-		displayAllUserFoodItems()
-
+		displayAllUserFoodItems();
 		
-		//Stops tracking of the item added to the array. 
-		return unsubscribe;
-	}, []);
+	}, [refreshKey]);
 
 	
 	// Handle's delete entry. Deletes Daily Log if empty.
@@ -102,11 +94,11 @@ const CalorieHistory = () => {
 
 			const { foodId, itemId } = deleteIndex;
 
-			await deleteFoodItem(itemId)
+			await deleteFoodItem(itemId);
 
-			await deleteDailyLog(foodId)
+			await deleteDailyLog(foodId);
 
-			await displayAllUserFoodItems(null)
+			await displayAllUserFoodItems();
 
 			setDeleteIndex(null);
 		}
@@ -114,7 +106,7 @@ const CalorieHistory = () => {
 		setShowConfirmationModel(false);
 	};
 	
-	
+
 
 	// Set's values of UseState's.
 	const handleModify = (foodItem) => {
@@ -282,13 +274,6 @@ const CalorieHistory = () => {
 						</div>
 						)}
 
-			
-
-
-
-
-
-
 					{/* Sample code here*/}
 
 					<div className="flex flex-auto ml-4 col-2">
@@ -296,15 +281,17 @@ const CalorieHistory = () => {
 						<div className="col-start-1 mt-10">
 
 							<div>
-								<h1 className="text-center"> Total Calories Consumed: </h1>
+								{/*This must display the totalled calories for today's date */}
+								<h1 className="text-center"> Today's Total Calories: </h1>
 							
 								<h2 className="text-center m-2"> {formatNumber(totalCalories)} kcal </h2>
 
 							</div>
 							
 							<div className="m-2 mt-10">
+								{/*This must display the totalled macros for today's date */}
 							
-								<h1 className="text-center m-2">Total Macro's: </h1>
+								<h1 className="text-center m-2">Today's Total Macro's: </h1>
 
 								<ul className="grid grid-cols-2 text-center">
 

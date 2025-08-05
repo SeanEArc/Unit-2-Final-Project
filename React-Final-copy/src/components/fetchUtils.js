@@ -15,7 +15,7 @@ export async function fetchGetData(url) {
 }
 
 // Post new user
-export async function postUserData(url, name, username, password){
+export async function postUserData(url, name, username, password, calorieGoal, proteinGoal){
     
     const response = await fetch(url, {
         method: 'POST',
@@ -25,7 +25,11 @@ export async function postUserData(url, name, username, password){
         body: JSON.stringify({ 
             name : name, 
             username : username, 
-            password : password }),
+            password : password,
+            calorieGoal : calorieGoal,
+            proteinGoal : proteinGoal
+
+        }),
     });
 
     const data = await response.json();

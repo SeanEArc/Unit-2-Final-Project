@@ -19,21 +19,24 @@ const Registration = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setError('');
+    setIsValid(true);
 
     if (password !== confirmPassword) {
       setError('Passwords do not match');
+      setIsValid(false)
       return;
     }
+
+    if (username.length < 5 || password.length <= 5) {
+      setError("Username or Password is not valid");
+      setIsValid(false)
+      return;
+    }    
     
     try {
 
       const getAllUsers = await fetchGetData('http://localhost:8080/users/all');
-
-      if (username.length >= 5 && password.length > 5) {
-        setIsValid(true);
-      } else {
-        setError("Username or Password is not valid")
-      }
 
       for (let i = 0; i < getAllUsers.length; i++) {
         if (username == getAllUsers[i].username) {        
@@ -44,7 +47,7 @@ const Registration = () => {
       }
 
       if (isValid) {
-        const postingUserData = await postUserData('http://localhost:8080/users/add', name, username, password)
+        const postingUserData = await postUserData('http://localhost:8080/users/add', name, username, password, calorieGoal, proteinGoal)
         navigate('/login')
       }
 

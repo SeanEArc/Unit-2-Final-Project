@@ -33,9 +33,9 @@ export const formatNumber = (number) => {
 }
 
 // Total's the values for each object in the array
-export const addedItems = (object, entryType) => {
-  return object.reduce((acc, curr) => acc + curr[entryType], 0)
-}
+export const addedItems = (array, key) => {
+  return array.reduce((acc, curr) => acc + (Number(curr[key]) || 0), 0)
+};
 
 // Removes the indexed item from the array
 // First perameter in filter is unused
@@ -49,3 +49,9 @@ export const updateEntry = (index, updatedFood) => {
   trackedFoodData[index] = updatedFood
   listeners.forEach(listener => listener(trackedFoodData))
 }
+
+// Get's today's date
+export const getTodayDateString = () => {
+  const today = new Date();
+  return today.toISOString().split('T')[0];
+};
