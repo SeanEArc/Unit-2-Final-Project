@@ -30,6 +30,7 @@ const LoginPage = () => {
                         if (username === getAllUsers[i].username && password === getAllUsers[i].password) {
                               setIsLoggedIn(true);
                               setUser(getAllUsers[i]);
+                              console.log(user)
                               break;
                         } else {
                               setError('Invalid username or password');

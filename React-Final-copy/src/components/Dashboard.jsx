@@ -19,7 +19,7 @@ const Dashboard = () => {
 
 	return (
 		
-		<div className="flex w-full h-full md:justify-center sm:justify-center items-center my-auto bg-zinc-50 mt-15">
+		<div className="flex w-full h-full md:justify-center sm:justify-center items-center my-auto bg-zinc-50 mt-6">
 
 			<div className="dashboard-grid grid grid-cols-2 grid-rows-3 gap-6 max-w-6xl">
 
