@@ -50,14 +50,14 @@ Database: PostgresSQL
      If you would like additional information how the application works, you can click on the How It Works page for further information.
 
 
-Want to see how the Models are connected on the backend? Click on this link:
+# Want to see how the Models are connected on the backend? Click on this link:
 https://dbdiagram.io/d/Copy-of-Final-Project-2-68924f78dd90d1786593b7ba
 
-Want to see our wire frames while creating the app? Click on this link: 
+# Want to see our wire frames while creating the app? Click on this link: 
 https://excalidraw.com/#json=6s2UiUNDbJDC_IdT-QUyD,TWNTMLp1cLXP5hj51yNgdQ
 
 
-We want to keep working on this application until it is every fitness user's dream app. 
+# We want to keep working on this application until it is every fitness user's dream app. 
 Future features: 
 - Adding API's for fast and easy logging
 - Adding a workout portion to track your lifts
