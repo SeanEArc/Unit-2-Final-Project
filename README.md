@@ -1,4 +1,4 @@
-#Calorie Counter Application
+# Calorie Counter Application
 Have you ever wanted to have the ability to track your calories without any of the ads? With this Calorie Tracker application, you have the ability to track your dietary needs, calculate your daily logged food items, and see
 all of your previously logged food items on one screen. Most importantly, it's easy to use and there are no ads! You can create multiple user's for each person that uses the application and alway's have information on your own database.
 We are continuing to work on the application to create a full scale fitness app for all of your fitness needs. A fitness app made by a fitness nerd, who want's more from a fitness application.
@@ -9,7 +9,7 @@ Backend: Java, Spring, Spring Boot Web
 Database: PostgresSQL
 
 
-#How to download the application:
+# How to download the application:
 
 1) Ensure the following technology stack is downloaded. 
 2) On PostGresSQL, create your database/server. Remember the username, password, and the server url. 
@@ -26,7 +26,7 @@ Database: PostgresSQL
     HERE IS AN EXAMPLE OF THE application.properties file: 
      spring.application.name=Final-Project
 
-    # UPDATE URL TO MATCH DATABASE URL AND NAME.
+   UPDATE URL TO MATCH DATABASE URL AND NAME.
     spring.datasource.url=jdbc:postgresql://localhost:5432/Final_Project_2
     spring.datasource.username=username12345
     spring.datasource.password=password123345
