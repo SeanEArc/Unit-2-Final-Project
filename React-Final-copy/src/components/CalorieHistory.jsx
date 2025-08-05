@@ -16,7 +16,7 @@ const CalorieHistory = () => {
 
 	const [trackedFood, setTrackedFood] = useState([]);
 	const [editingFood, setEditingFood] = useState(null);
-	const [editForm, setEditForm] = useState({ foodName: '', calories: '', protein: '', carbs: '', fat: ''});
+	const [editForm, setEditForm] = useState({ foodName: '', calories: '', protein: '', carbs: '', fat: '', ingredients: []});
 
 	const [showConfirmationModel, setShowConfirmationModel] = useState(false)
 	const [deleteIndex, setDeleteIndex] = useState(null);
@@ -114,6 +114,7 @@ const CalorieHistory = () => {
 		setShowConfirmationModel(false);
 	};
 	
+	
 
 	// Set's values of UseState's.
 	const handleModify = (foodItem) => {
@@ -123,11 +124,12 @@ const CalorieHistory = () => {
 			calories: foodItem.calories,
 			protein: foodItem.protein,
 			carbs: foodItem.carbs,
-			fat: foodItem.fat
+			fat: foodItem.fat,
+			ingredients: [...foodItem.ingredients]
 		});
 	}	
 
-	// Send's info to js file to complete updating form, then closes the form.
+	// Send's info to backend to be updated
 	const handleUpdate = async () => {
 
 		if (!editingFood) return;
@@ -138,14 +140,13 @@ const CalorieHistory = () => {
 			calories: Number(editForm.calories),
 			protein: Number(editForm.protein),
 			carbs: Number(editForm.carbs),
-			fat: Number(editForm.fat)
+			fat: Number(editForm.fat),
+			ingredients: editForm.ingredients
 		}
 
 		await updateFoodItem(editingFood.id, updatedFood);
 		await displayAllUserFoodItems();
 		setEditingFood(null);
-
-
 
 	};
 

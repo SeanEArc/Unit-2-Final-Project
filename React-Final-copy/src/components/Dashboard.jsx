@@ -1,14 +1,17 @@
 import './DashboardStyling.css'
 import AddFoodModal from "./AddFoodModal"
 import { useContext, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { UserContext } from './UserContext'
 
 
 const Dashboard = () => {
 
 	const [showModal, setShowModal] = useState(false)
-	const { user } = useContext(UserContext)
+	const { user, setIsLoggedIn } = useContext(UserContext)
+
+	const navigate = useNavigate();
+
 	
 
 	//Reusable button
@@ -60,6 +63,32 @@ const Dashboard = () => {
 						className={`${buttonStylings} small-link-styles`}>
 						Want to Learn More About Us?
 					</Link>
+				</div>
+
+				<div>
+
+				<Link
+				to="/userDetails"
+				className={`${buttonStylings} small-link-styles`}
+				>
+				User Details
+				</Link>
+
+						
+
+				</div>
+
+				<div>
+
+					<button
+						onClick={() => {
+							setIsLoggedIn(false)
+							navigate('/login');
+						}}
+						className={`${buttonStylings} small-log-food-button `} >
+						Log Out
+					</button>
+
 				</div>
 
 				{showModal && <AddFoodModal onClose={() => setShowModal(false)} />}

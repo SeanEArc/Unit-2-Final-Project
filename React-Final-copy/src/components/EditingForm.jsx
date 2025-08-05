@@ -28,6 +28,21 @@ const EditingForm = ( { editForm, setEditForm, handleUpdate, cancelEdit } ) => {
 				</label>
 			))}
 
+			<label className="font-bold">
+				Ingredients (comma separated):
+				<textarea
+				className="mb-2 p-1 w-full font-normal"
+				placeholder="Enter ingredients separated by commas"
+				value={editForm.ingredients.join(', ')}
+				onChange={(e) =>
+					setEditForm({ 
+					...editForm, 
+					ingredients: e.target.value.split(',').map(i => i.trim())
+					})
+				}
+				/>
+			</label>
+
 			<div className="flex justify-center items-center">
 				<button
 				className="bg-blue-500 text-zinc-200 px-20 py-2 mr-2 rounded font-semibold hover:bg-blue-600 hover:text-white"

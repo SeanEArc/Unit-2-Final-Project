@@ -128,7 +128,6 @@ export async function deleteDailyLog(id) {
 
 
 //Edit's userResponse
-
 export async function updateFoodItem(foodId, updatedData) {
     const response = await fetch(`http://localhost:8080/food-item/update/${foodId}`, {
         method: 'PUT',

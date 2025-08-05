@@ -17,10 +17,13 @@ const HowItWorks = () => {
 
       return (
 
-            <div className="max-w-5xl mx-auto p-6 text-center">
+            <div className="max-w-6xl mx-auto p-6 text-center">
+
+                  <hr className='mx-10 my-5 bg-gray-400 border-0.5'/>
+
 
                   <h1 className="text-3xl font-bold mb-2">So How Does This All Work? </h1>
-                  <p className="text-gray-600 mb-8"> Your first step in accomplishing your diet goals! </p>
+                  <p className="text-gray-600 mb-6"> Your first step in accomplishing your diet goals! </p>
 
                   <hr className='mx-10 bg-gray-400 border-0.5'/>
 

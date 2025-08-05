@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png'
+import { useContext } from 'react';
+import { UserContext } from './UserContext';
 
 // Comment for commits
 const AboutPage = () => {
+
+      const { isLoggedIn } = useContext(UserContext);
 
       const futurePlans = [
             "A Search Bar (to track commonly found food's faster!)",
@@ -19,7 +23,7 @@ const AboutPage = () => {
       return (
 
             <div className="max-w-6xl mx-auto p-6 text-center">
-s
+
                   <hr className='mx-10 my-5 bg-gray-300 border-0.5'/>
 
                   <div className='my-5'>
@@ -113,10 +117,15 @@ s
                               Ready to begin your journey? Head over to your dashboard and start tracking today!
                               </p>
 
-                              <Link to="/"
+                              {isLoggedIn ? (<Link to="/"
                               className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
                               Go to Dashboard
-                              </Link>
+                              </Link>) : (<Link to="/login"
+                              className="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
+                              Go to Dashboard
+                              </Link>)}
+
+
 
                         </div>
 
