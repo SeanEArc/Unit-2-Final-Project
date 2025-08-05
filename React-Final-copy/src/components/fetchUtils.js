@@ -90,39 +90,39 @@ export async function deleteFoodItem(id) {
 // Delete's DailyLoggedFood DailyLog is empty.
 export async function deleteDailyLog(id) {
 
-		// Get the loggedFood by ID
-		const responseGet = await fetch(`http://localhost:8080/logged-foods/${id}`, {
-			method: 'GET',
-			headers: { 'Content-Type': 'application/json' },
-		});
+    // Get the loggedFood by ID
+    const responseGet = await fetch(`http://localhost:8080/logged-foods/${id}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+    });
 
-		if (!responseGet.ok) {
-			const errorText = await responseGet.text();
-			throw new Error(`Failed to fetch log: ${errorText}`);
-		}
+    if (!responseGet.ok) {
+        const errorText = await responseGet.text();
+        throw new Error(`Failed to fetch log: ${errorText}`);
+    }
 
-		const userData = await responseGet.json();
+    const userData = await responseGet.json();
 
-		console.log("Fetched LoggedFood:", userData);
+    console.log("Fetched LoggedFood:", userData);
 
-		//Only delete's DailyLog if no food items
-		if (userData.loggedFoodItems.length === 0) {
-			const responseDelete = await fetch(`http://localhost:8080/logged-foods/${id}`, {
-				method: 'DELETE',
-				headers: { 'Content-Type': 'application/json' },
-			});
+    //Only delete's DailyLog if no food items
+    if (userData.loggedFoodItems.length === 0) {
+        const responseDelete = await fetch(`http://localhost:8080/logged-foods/${id}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+        });
 
-			if (!responseDelete.ok) {
-				const errorText = await responseDelete.text();
-				throw new Error(`Failed to delete: ${errorText}`);
-			}
+        if (!responseDelete.ok) {
+            const errorText = await responseDelete.text();
+            throw new Error(`Failed to delete: ${errorText}`);
+        }
 
-			const message = await responseDelete.text();
-			console.log("Deleted:", message);
+        const message = await responseDelete.text();
+        console.log("Deleted:", message);
 
-			return message;
+        return message;
 
-		}
+    }
 
 }
 
@@ -147,6 +147,7 @@ export async function updateFoodItem(foodId, updatedData) {
 
 }
 
+// Updated user information
 export async function updateUser (userId, updatedData) {
     const response = await fetch(`http://localhost:8080/users/update/${userId}`, {
         method: 'PUT',
@@ -163,5 +164,31 @@ export async function updateUser (userId, updatedData) {
     }
 
     return await response.json();
+}
+
+
+// Delete Account:
+export async function deleteUser(id) {
+
+
+    //Only delete's DailyLog if no food items
+
+        const responseDelete = await fetch(`http://localhost:8080/users/delete/${id}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!responseDelete.ok) {
+            const errorText = await responseDelete.text();
+            throw new Error(`Failed to delete: ${errorText}`);
+        }
+
+        const message = await responseDelete.text();
+        console.log("Deleted:", message);
+
+        return message;
+
+    
+
 }
 

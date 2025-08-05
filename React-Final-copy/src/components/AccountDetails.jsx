@@ -2,12 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "./UserContext";
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png'
-import { updateUser } from "./fetchUtils";
+import { deleteUser, updateUser } from "./fetchUtils";
 
 
 const AccountDetails = () => {
 
-      const { user } = useContext(UserContext);
+      const { user, setUser } = useContext(UserContext);
 
       const [ name, setName ] = useState(user.name)
       const [ username, setUsername] = useState(user.username)
@@ -22,9 +22,6 @@ const AccountDetails = () => {
 
       const updateUserInformation = async (event) => {
             event.preventDefault();
-
-
-
             try {
                   const updatedUser = await updateUser(user.id, {
                         ...user,
@@ -87,10 +84,31 @@ const AccountDetails = () => {
                   setNewPasswordConfirmation('');                  
 
             } catch (error) {
+
                   console.error("Error updating goals:", error);
                   alert("Failed to update goals.");
             }
 
+      }
+
+
+      const deleteAccount = async (event) => {
+            event.preventDefault();
+
+            const confirmed = window.confirm("Are you sure you want to delete your account?");
+            if (!confirmed) return;
+            
+            try {
+                  await deleteUser(user.id)
+
+                  alert("Your account has been deleted")
+                  setUser(null)
+                  navigate('/login')
+
+            } catch (error) {
+
+                  alert("Failed to delete account. Please try again later.")
+            }
       }
 
       
@@ -219,7 +237,20 @@ const AccountDetails = () => {
 					      <input type="submit" value="Submit" className="mt-2 px-4 py-2 bg-blue-500 text-white shadow-md rounded hover:cursor-pointer hover:bg-blue-600 hover:scale-101"/>
 
                               </form>
-                        </div>      
+
+
+
+                        </div>
+
+
+                        <div className="mt-10">
+                              <button
+                              onClick={deleteAccount}
+                              className="mt-2 px-4 py-2 bg-red-500 text-white shadow-md rounded hover:bg-red-600 hover:scale-101">
+                              Delete Account
+                              </button>                              
+                        
+                        </div>                        
                         
 
                         <div className='grid md:grid-cols-2 sm:grid-cols-1 my-10 md:mx-10 sm:w-full'>
