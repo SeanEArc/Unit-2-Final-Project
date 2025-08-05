@@ -54,6 +54,8 @@ public class UserController {
             existingUser.setName(users.getName());
             existingUser.setUsername(users.getUsername());
             existingUser.setPassword(users.getPassword());
+            existingUser.setCalorieGoal(users.getCalorieGoal());
+            existingUser.setProteinGoal(users.getProteinGoal());
             Users updatedUser = userRepositories.save(existingUser);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         } else {

@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-// Comment for commit to seperate branch
 
 @Entity
 public class Users {
@@ -17,6 +16,9 @@ public class Users {
     private String name;
     private String username;
     private String password;
+    private Integer calorieGoal;
+    private Integer proteinGoal;
+
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -30,6 +32,23 @@ public class Users {
         this.name = name;
         this.username = username;
         this.password = password;
+    }
+
+    public Users(int id, String name, String username, String password, Integer calorieGoal) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.calorieGoal = calorieGoal;
+    }
+
+    public Users(int id, String name, String username, String password, Integer calorieGoal, Integer proteinGoal) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.calorieGoal = calorieGoal;
+        this.proteinGoal = proteinGoal;
     }
 
     // ------------------------ Getters and Setters -----------------------------------------------
@@ -73,5 +92,21 @@ public class Users {
 
     public void setLoggedFoods(List<LoggedFoods> loggedFoods) {
         this.loggedFoods = loggedFoods;
+    }
+
+    public Integer getCalorieGoal() {
+        return calorieGoal;
+    }
+
+    public void setCalorieGoal(Integer calorieGoal) {
+        this.calorieGoal = calorieGoal;
+    }
+
+    public Integer getProteinGoal() {
+        return proteinGoal;
+    }
+
+    public void setProteinGoal(Integer proteinGoal) {
+        this.proteinGoal = proteinGoal;
     }
 }
