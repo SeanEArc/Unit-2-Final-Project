@@ -22,7 +22,6 @@ const LoginPage = () => {
       const handleLogin = async (event) => {
             event.preventDefault();
 
-            try {
 
                   const getAllUsers = await fetchGetData('http://localhost:8080/users/all');
 
@@ -30,16 +29,12 @@ const LoginPage = () => {
                         if (username === getAllUsers[i].username && password === getAllUsers[i].password) {
                               setIsLoggedIn(true);
                               setUser(getAllUsers[i]);
-                              console.log(user)
                               break;
                         } else {
                               setError('Invalid username or password');
                         }
                   }
 
-            } catch (error) {
-                  console.error('Error logging in:', error);
-            }
       };
 
       useEffect(() => {
@@ -47,34 +42,30 @@ const LoginPage = () => {
             if (isLoggedIn) {
                   navigate('/'); 
             }
-            console.log(user)
       }, [isLoggedIn, navigate]);
 
 
 
       return (
 
-            <div className="login-page mt-25">
+            <div className="login-page py-20 px-4 min-h-screen bg-gray-100">
 
-                  <div className='grid grid-cols-[60%_40%] max-w-[80%] items-center justify-center mx-auto border'>
+                  <div className='grid md:grid-cols-2 grid-cols-1 max-w-6xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden'>
 
-                        <div className='mx-auto'>
-                              <img src={HealthyPlate} alt='Healthy Plate'/>
+                        <div className='hidden md:flex items-center justify-center bg-blue-50 p-6'>
+                              <img src={HealthyPlate} alt='Healthy Plate' className="max-w-full h-auto"/>
                         </div>
-                  
-                        <div className='border md:min-w-[80%] mx-auto'>
 
-                              <h1 className='pb-5'>User Login</h1>
+                  {/*Form section*/}
+                        <div className='p-10 flex flex-col justify-center'>
 
+                              <h1 className='text-3xl font-bold text-gray-800 mb-6'>User Login</h1>
 
+                              <form onSubmit={handleLogin} className='space-y-4'>
 
-                              <form onSubmit={handleLogin}>
-
-                                    <div className='pt-2 pb-2 mb-1'>
-
-                                          <label className='block text-lg'>
-                                                Username:
-                                                
+                                    <div>
+                                          <label className='block text-lg text-gray-700 mb-1'>
+                                                Username:  
                                           </label>
 
                                           <input type="text"
@@ -82,42 +73,40 @@ const LoginPage = () => {
                                                 placeholder='Required'
                                                 onChange={(event) => setUsername(event.target.value)}
                                                 required
-                                                className='border px-2 py-1'> 
-                                                </input>
-
+                                                className='w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'> 
+                                          </input>
                                     </div>
 
-                                    <div className='pt-1 pb-1'>
-                                          <label className='block text-lg'>
-                                                
+                                    <div>
+                                          <label className="block text-lg text-gray-700 mb-1">
                                                 Password:
-                                                
                                           </label>
+
                                           <input type='password'
                                                 value={password}
                                                 placeholder='Required'
                                                 onChange={(event) => setPassword(event.target.value)}
                                                 required
-                                                className='border px-2 py-1'>
-                                                </input>
+                                                className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                          </input>
                                     </div>
 
-                                    <div className='font-semibold'>
-                                          {error && <p className="error text-red-500">{error}</p>}
-                                    </div>
+                                    {error && <p className="text-red-500 font-medium">{error}</p>}
 
-                                    <div className='mt-4'>
-                                          <button 
-                                          type="submit"
-                                          className='bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded w-[25%] text-center shadow-lg'>Login</button>
-                                    </div>
+                                    <button 
+                                    type="submit"
+                                    className='w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded shadow transition'>
+                                          Login
+                                    </button>
 
-                                    <div>
+                                    <div className="text-center mt-4">
                                     
-                                    <p className='font-medium'> Don't have an account? </p>
+                                          <p className="font-medium text-gray-700">Don't have an account?</p>
 
-                                    <Link to="/register"
-                                    className='bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded w-[25%] text-center inline-block shadow-lg'> Create an account </Link>
+                                          <Link to="/register"
+                                                      className="inline-block mt-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded shadow transition"> 
+                                                      Create an account 
+                                          </Link>
 
                                     </div>
                               </form>
